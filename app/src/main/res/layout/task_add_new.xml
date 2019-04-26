@@ -39,7 +39,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="4dp"
                 android:textColor="#ffffff"
-                android:text="Create"
+                android:text="Create New Task"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 />
@@ -53,8 +53,6 @@
                 android:onClick="doneAddTask"/>
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,6 +98,30 @@
             android:textColorHint="#CCCCCC"
             android:textColor="#666666"
             android:onClick="showStartDatePicker"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2D2D2"/>
+        <EditText
+            android:id="@+id/task_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:hint="Task Priority"
+            android:padding="12dp"
+            android:focusable="false"
+            android:background="@android:color/white"
+            android:ems="10"
+            android:singleLine="true"
+            android:textColorHint="#CCCCCC"
+            android:textColor="#666666"
+            android:onClick="showStartDatePicker"/>
+        <Button
+            android:id="@+id/location_button"
+            android:layout_width="357dp"
+            android:layout_height="wrap_content"
+            android:text="Location" />
 
     </LinearLayout>
 

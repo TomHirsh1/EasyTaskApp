@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,9 +50,20 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         startMonth = cal.get(Calendar.MONTH);
         startDay = cal.get(Calendar.DAY_OF_MONTH);
 
+        final Button location_button = findViewById(R.id.location_button);
+        location_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openMapActivity();
+            }
+        });
         if (isUpdate) {
             init_update();
         }
+    }
+
+    public void openMapActivity() {
+       Intent intent = new Intent(this, GoogleMapsActivity.class);
+       startActivity(intent);
     }
 
     public void init_update() {

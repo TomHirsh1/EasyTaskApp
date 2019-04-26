@@ -82,10 +82,6 @@ public class TaskHome extends AppCompatActivity {
 
     }
 
-
-
-
-
     class LoadTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -119,29 +115,23 @@ public class TaskHome extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String xml) {
-
-
             loadListView(taskListToday,todayList);
             loadListView(taskListTomorrow,tomorrowList);
             loadListView(taskListUpcoming,upcomingList);
 
-
-            if(todayList.size()>0)
-            {
+            if(todayList.size()>0){
                 todayText.setVisibility(View.VISIBLE);
             }else{
                 todayText.setVisibility(View.GONE);
             }
 
-            if(tomorrowList.size()>0)
-            {
+            if(tomorrowList.size()>0){
                 tomorrowText.setVisibility(View.VISIBLE);
             }else{
                 tomorrowText.setVisibility(View.GONE);
             }
 
-            if(upcomingList.size()>0)
-            {
+            if(upcomingList.size()>0){
                 upcomingText.setVisibility(View.VISIBLE);
             }else{
                 upcomingText.setVisibility(View.GONE);
