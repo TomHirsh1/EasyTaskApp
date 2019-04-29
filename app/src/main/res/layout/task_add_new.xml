@@ -103,12 +103,12 @@
             android:layout_height="2dp"
             android:background="#D2D2D2"/>
         <EditText
-            android:id="@+id/task_location"
+            android:id="@+id/task_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:hint="Task Priority"
+            android:hint="Task Time"
             android:padding="12dp"
             android:focusable="false"
             android:background="@android:color/white"
@@ -116,7 +116,27 @@
             android:singleLine="true"
             android:textColorHint="#CCCCCC"
             android:textColor="#666666"
-            android:onClick="showStartDatePicker"/>
+            android:onClick="showStartTimePicker"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2D2D2"/>
+        <EditText
+            android:id="@+id/task_priority"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Task Priority"
+            android:onClick="showStartTimePicker"
+            android:padding="12dp"
+            android:singleLine="true"
+            android:textColor="#666666"
+            android:textColorHint="#CCCCCC" />
+
         <Button
             android:id="@+id/location_button"
             android:layout_width="357dp"

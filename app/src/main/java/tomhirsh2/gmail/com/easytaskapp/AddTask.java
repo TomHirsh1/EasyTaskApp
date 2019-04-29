@@ -10,7 +10,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.Task;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,14 +25,17 @@ import java.util.Locale;
  * Created by Ferdousur Rahman Sarker on 3/17/2018.
  */
 
-public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
-
+public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    private EditText timeTextView;
     TaskDBHelper mydb;
     DatePickerDialog dpd;
+    TimePickerDialog tpd;
     int startYear = 0, startMonth = 0, startDay = 0;
+    int startHour = 0, startMinute = 0, startSecond = 0;
     String dateFinal;
     String nameFinal;
+    String timeFinal;
+    String priorityFinal;
 
     Intent intent;
     Boolean isUpdate;
@@ -50,6 +58,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         startMonth = cal.get(Calendar.MONTH);
         startDay = cal.get(Calendar.DAY_OF_MONTH);
 
+        startHour = cal.get(Calendar.HOUR);
+        startMinute = cal.get(Calendar.MINUTE);
+        startSecond = cal.get(Calendar.SECOND);
+
         final Button location_button = findViewById(R.id.location_button);
         location_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -71,6 +83,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         TextView toolbar_task_add_title = (TextView) findViewById(R.id.toolbar_task_add_title);
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
+        EditText task_time = (EditText) findViewById(R.id.task_time);
+        EditText task_priority = (EditText) findViewById(R.id.task_priority);
         toolbar_task_add_title.setText("Update");
         Cursor task = mydb.getDataSpecific(id);
         if (task != null) {
@@ -82,6 +96,12 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             startMonth = cal.get(Calendar.MONTH);
             startDay = cal.get(Calendar.DAY_OF_MONTH);
             task_date.setText(Function.Epoch2DateString(task.getString(2).toString(), "dd/MM/yyyy"));
+
+            startHour = cal.get(Calendar.HOUR);
+            startMinute = cal.get(Calendar.MINUTE);
+            startSecond = cal.get(Calendar.SECOND);
+            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "hh:mm"));
+            task_priority.setText(task.getString(1).toString());
         }
     }
 
@@ -99,8 +119,11 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         int errorStep = 0;
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
+        EditText task_time = (EditText) findViewById(R.id.task_time);
+        EditText task_priority = (EditText) findViewById(R.id.task_priority);
         nameFinal = task_name.getText().toString();
         dateFinal = task_date.getText().toString();
+        timeFinal = task_time.getText().toString();
 
         /* Checking */
         if (nameFinal.trim().length() < 1) {
@@ -111,6 +134,11 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         if (dateFinal.trim().length() < 4) {
             errorStep++;
             task_date.setError("Provide a specific date");
+        }
+
+        if (timeFinal.trim().length() < 4) {
+            errorStep++;
+            task_time.setError("Provide a specific time");
         }
 
         if (errorStep == 0) {
@@ -133,6 +161,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         super.onResume();
         dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag("startDatepickerdialog");
         if (dpd != null) dpd.setOnDateSetListener(this);
+        tpd = (TimePickerDialog) getFragmentManager().findFragmentByTag("startTimepickerdialog");
+        if (tpd != null) tpd.setOnTimeSetListener(this);
     }
 
     @Override
@@ -148,10 +178,25 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         task_date.setText(date);
     }
 
-
     public void showStartDatePicker(View v) {
         dpd = DatePickerDialog.newInstance(AddTask.this, startYear, startMonth, startDay);
         dpd.setOnDateSetListener(this);
         dpd.show(getFragmentManager(), "startDatepickerdialog");
     }
+
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+        String minuteString = minute < 10 ? "0"+minute : ""+minute;
+        String time = hourString + ":" + minuteString;
+        EditText task_time = (EditText) findViewById(R.id.task_time);
+        task_time.setText(time);
+    }
+
+    public void showStartTimePicker(View v) {
+        tpd = TimePickerDialog.newInstance(AddTask.this, startHour, startMinute, true);
+        tpd.setOnTimeSetListener(this);
+        tpd.show(getFragmentManager(), "startTimepickerdialog");
+    }
+
 }

@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 
 /**
  * Created by Ferdousur Rahman Sarker on 3/19/2018.
@@ -27,7 +30,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "CREATE TABLE "+CONTACTS_TABLE_NAME +
-                        "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER, priority INTEGER)"
+                        "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER)"
         );
     }
 
@@ -47,6 +50,17 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         } catch (ParseException e) {}
         return date.getTime();
     }
+
+    private long getTime(String hour){
+        SimpleDateFormat timeFormat = new SimpleDateFormat(
+                "hh:mm", Locale.getDefault());
+        Date time = new Date();
+        try {
+            time = timeFormat.parse(hour);
+        } catch (ParseException e) {}
+        return time.getTime();
+    }
+
 
     public boolean insertContact(String task, String dateStr){
         Date date;

@@ -36,6 +36,8 @@ public class TaskHome extends AppCompatActivity {
     public static String KEY_ID = "id";
     public static String KEY_TASK = "task";
     public static String KEY_DATE = "date";
+    public static String KEY_TIME = "time";
+    public static String KEY_PRIORITY = "priority";
 
 
     @Override
@@ -58,14 +60,12 @@ public class TaskHome extends AppCompatActivity {
     }
 
 
-    public void openAddTask(View v)
-    {
+    public void openAddTask(View v) {
         Intent i = new Intent(this, AddTask.class);
         startActivity(i);
     }
 
-    public void populateData()
-    {
+    public void populateData() {
         mydb = new TaskDBHelper(activity);
         scrollView.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
@@ -77,16 +77,13 @@ public class TaskHome extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         populateData();
-
     }
 
     class LoadTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             todayList.clear();
             tomorrowList.clear();
             upcomingList.clear();
@@ -136,7 +133,6 @@ public class TaskHome extends AppCompatActivity {
             }else{
                 upcomingText.setVisibility(View.GONE);
             }
-
 
             loader.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);
