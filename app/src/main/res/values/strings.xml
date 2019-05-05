@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">EasyTask</string>
+
+    <string-array name="priorityValues">
+        <item>Low</item>
+        <item>Moderate</item>
+        <item>High</item>
+    </string-array>
 </resources>

@@ -66,13 +66,22 @@
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:gravity="center">
+
+        <TextView
+            android:id="@+id/taskTextText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="What is to be done?"
+            android:textSize="16sp"
+            android:textColor="#CCCCCC"/>
         <EditText
             android:id="@+id/task_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:hint="Task"
+            android:hint="Enter your task"
             android:background="@android:color/white"
             android:padding="12dp"
             android:ems="10"
@@ -83,13 +92,22 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#D2D2D2"/>
+
+        <TextView
+            android:id="@+id/taskDateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Due Date"
+            android:textSize="16sp"
+            android:textColor="#CCCCCC"/>
         <EditText
             android:id="@+id/task_date"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:hint="Task Date"
+            android:hint="Enter date"
             android:padding="12dp"
             android:focusable="false"
             android:background="@android:color/white"
@@ -102,13 +120,22 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#D2D2D2"/>
+
+        <TextView
+            android:id="@+id/taskTimeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Start at"
+            android:textSize="16sp"
+            android:textColor="#CCCCCC"/>
         <EditText
             android:id="@+id/task_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:hint="Task Time"
+            android:hint="Enter time"
             android:padding="12dp"
             android:focusable="false"
             android:background="@android:color/white"
@@ -121,26 +148,37 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#D2D2D2"/>
-        <EditText
+
+        <TextView
+            android:id="@+id/taskPriorityText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Priority"
+            android:textSize="16sp"
+            android:textColor="#CCCCCC"/>
+        <Spinner
             android:id="@+id/task_priority"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@android:color/white"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="Task Priority"
-            android:onClick="showStartTimePicker"
-            android:padding="12dp"
-            android:singleLine="true"
-            android:textColor="#666666"
-            android:textColorHint="#CCCCCC" />
+            android:background="@android:color/white"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2D2D2"/>
 
+        <TextView
+            android:id="@+id/taskLocationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Location"
+            android:textSize="16sp"
+            android:textColor="#CCCCCC"/>
         <Button
             android:id="@+id/location_button"
             android:layout_width="357dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Location" />
 
     </LinearLayout>
