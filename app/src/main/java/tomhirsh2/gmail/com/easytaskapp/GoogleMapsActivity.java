@@ -154,12 +154,9 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
 
 
                             }
-
-
                         }
                         else{
                             Toast.makeText(this,"Location not found...",Toast.LENGTH_SHORT).show();
-
                         }
                     }
                     catch (IOException e) {
@@ -171,7 +168,6 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                     Toast.makeText(this,"please write any location name",Toast.LENGTH_SHORT).show();
                 }
                 break;
-
         }
         }
 

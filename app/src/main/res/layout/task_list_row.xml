@@ -13,7 +13,7 @@
         android:padding="15dip"
         android:weightSum="7">
 
-        <!--  ListRow Left sied Thumbnail image -->
+        <!--  ListRow Left side Thumbnail image -->
         <LinearLayout
             android:id="@+id/thumbnail"
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         <LinearLayout
             android:id="@+id/centerContent"
             android:layout_width="wrap_content"
-            android:layout_height="58dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="4"
             android:orientation="vertical"
@@ -66,6 +66,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Task Time"
+                android:textColor="#676464"
+                android:textSize="14sp"
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/task_priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task Priority"
+                android:textColor="#676464"
+                android:textSize="14sp"
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/task_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task Location"
                 android:textColor="#676464"
                 android:textSize="14sp"
                 android:typeface="sans" />

@@ -41,6 +41,9 @@ public class ListTaskAdapter extends BaseAdapter {
             holder.task_image = (TextView) convertView.findViewById(R.id.task_image);
             holder.task_name = (TextView) convertView.findViewById(R.id.task_name);
             holder.task_date = (TextView) convertView.findViewById(R.id.task_date);
+            holder.task_time = (TextView) convertView.findViewById(R.id.task_time);
+            holder.task_priority = (TextView) convertView.findViewById(R.id.task_priority);
+            holder.task_location = (TextView) convertView.findViewById(R.id.task_location);
             convertView.setTag(holder);
         } else {
             holder = (ListTaskViewHolder) convertView.getTag();
@@ -48,6 +51,9 @@ public class ListTaskAdapter extends BaseAdapter {
         holder.task_image.setId(position);
         holder.task_name.setId(position);
         holder.task_date.setId(position);
+        holder.task_time.setId(position);
+        holder.task_priority.setId(position);
+        holder.task_location.setId(position);
 
         HashMap<String, String> song = new HashMap<String, String>();
         song = data.get(position);
@@ -55,6 +61,10 @@ public class ListTaskAdapter extends BaseAdapter {
         try{
             holder.task_name.setText(song.get(TaskHome.KEY_TASK));
             holder.task_date.setText(song.get(TaskHome.KEY_DATE));
+            holder.task_time.setText(song.get(TaskHome.KEY_TIME));
+            holder.task_priority.setText(song.get(TaskHome.KEY_PRIORITY));
+            holder.task_location.setText(song.get(TaskHome.KEY_LOCATION));
+
 
             /* Image */
             ColorGenerator generator = ColorGenerator.MATERIAL;
@@ -70,5 +80,5 @@ public class ListTaskAdapter extends BaseAdapter {
 
 class ListTaskViewHolder {
     TextView task_image;
-    TextView task_name, task_date;
+    TextView task_name, task_date, task_time, task_priority, task_location;
 }

@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
@@ -76,6 +78,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                 android.R.layout.simple_expandable_list_item_1, getResources().getStringArray(R.array.priorityValues));
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskPrioritySpinner.setAdapter(spinnerAdapter);
+        priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
 
         if (isUpdate) {
             init_update();
@@ -93,7 +96,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
         EditText task_time = (EditText) findViewById(R.id.task_time);
-      //  EditText task_priority = (EditText) findViewById(R.id.task_priority);
+        //EditText task_priority = (EditText) findViewById(R.id.task_priority);
         toolbar_task_add_title.setText("Update");
         Cursor task = mydb.getDataSpecific(id);
         if (task != null) {
@@ -106,11 +109,11 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             startDay = cal.get(Calendar.DAY_OF_MONTH);
             task_date.setText(Function.Epoch2DateString(task.getString(2).toString(), "dd/MM/yyyy"));
 
-            startHour = cal.get(Calendar.HOUR);
+            startHour = cal.get(Calendar.HOUR_OF_DAY);
             startMinute = cal.get(Calendar.MINUTE);
             startSecond = cal.get(Calendar.SECOND);
-            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "hh:mm"));
-          //  task_priority.setText(task.getString(1).toString());
+            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "hh:mm a"));
+            //task_priority.setText(task.getString(1).toString());
         }
     }
 
@@ -129,7 +132,6 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
         EditText task_time = (EditText) findViewById(R.id.task_time);
-        //EditText task_priority = (Spinner) findViewById(R.id.task_priority);
         nameFinal = task_name.getText().toString();
         dateFinal = task_date.getText().toString();
         timeFinal = task_time.getText().toString();
@@ -152,10 +154,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
         if (errorStep == 0) {
             if (isUpdate) {
-                mydb.updateContact(id, nameFinal, dateFinal);
+                mydb.updateContact(id, nameFinal, dateFinal, timeFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated.", Toast.LENGTH_SHORT).show();
             } else {
-                mydb.insertContact(nameFinal, dateFinal);
+                mydb.insertContact(nameFinal, dateFinal, timeFinal);
                 Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
             }
 
@@ -195,8 +197,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
-        String minuteString = minute < 10 ? "0"+minute : ""+minute;
+        String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+        String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String time = hourString + ":" + minuteString;
         EditText task_time = (EditText) findViewById(R.id.task_time);
         task_time.setText(time);

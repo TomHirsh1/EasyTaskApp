@@ -38,6 +38,7 @@ public class TaskHome extends AppCompatActivity {
     public static String KEY_DATE = "date";
     public static String KEY_TIME = "time";
     public static String KEY_PRIORITY = "priority";
+    public static String KEY_LOCATION = "location";
 
 
     @Override
@@ -56,7 +57,6 @@ public class TaskHome extends AppCompatActivity {
         todayText = (TextView) findViewById(R.id.todayText);
         tomorrowText = (TextView) findViewById(R.id.tomorrowText);
         upcomingText = (TextView) findViewById(R.id.upcomingText);
-
     }
 
 
@@ -151,6 +151,8 @@ public class TaskHome extends AppCompatActivity {
                 mapToday.put(KEY_ID, cursor.getString(0).toString());
                 mapToday.put(KEY_TASK, cursor.getString(1).toString());
                 mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd-MM-yyyy"));
+                mapToday.put(KEY_TIME, Function.Epoch2TimeString(cursor.getString(3).toString(), "hh:mm a"));
+                //mapToday.put(KEY_PRIORITY, cursor.getString(4).toString());
                 dataList.add(mapToday);
                 cursor.moveToNext();
             }

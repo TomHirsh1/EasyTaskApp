@@ -30,7 +30,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "CREATE TABLE "+CONTACTS_TABLE_NAME +
-                        "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER)"
+                        "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER, timeStr INTEGER)"
         );
     }
 
@@ -52,32 +52,36 @@ public class TaskDBHelper extends SQLiteOpenHelper {
     }
 
     private long getTime(String hour){
-        SimpleDateFormat timeFormat = new SimpleDateFormat(
-                "hh:mm", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "hh:mm a", Locale.getDefault());
         Date time = new Date();
         try {
-            time = timeFormat.parse(hour);
+            time = dateFormat.parse(hour);
         } catch (ParseException e) {}
         return time.getTime();
     }
 
 
-    public boolean insertContact(String task, String dateStr){
+    public boolean insertContact(String task, String dateStr, String timeStr){
         Date date;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("task", task);
         contentValues.put("dateStr", getDate(dateStr));
+        contentValues.put("timeStr", getTime(timeStr));
+        //contentValues.put("priority", priority);
+
         db.insert(CONTACTS_TABLE_NAME, null, contentValues);
         return true;
     }
 
-    public boolean updateContact(String id, String task, String dateStr){
+    public boolean updateContact(String id, String task, String dateStr, String timeStr){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put("task", task);
         contentValues.put("dateStr", getDate(dateStr));
+        contentValues.put("timeStr", getDate(timeStr));
+        //contentValues.put("priority", priority);
 
         db.update(CONTACTS_TABLE_NAME, contentValues, "id = ? ", new String[] { id } );
         return true;
