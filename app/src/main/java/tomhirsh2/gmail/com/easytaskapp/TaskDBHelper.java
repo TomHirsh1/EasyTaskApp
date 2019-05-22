@@ -76,7 +76,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("task", task);
         contentValues.put("dateStr", getDate(dateStr));
-        contentValues.put("timeStr", getDate(timeStr));
+        contentValues.put("timeStr", getTime(timeStr));
         contentValues.put("priority", priority);
 
         db.update(CONTACTS_TABLE_NAME, contentValues, "id = ? ", new String[] { id } );

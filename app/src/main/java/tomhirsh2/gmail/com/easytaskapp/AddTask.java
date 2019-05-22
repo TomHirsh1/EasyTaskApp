@@ -28,7 +28,6 @@ import java.util.Locale;
 
 
 public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    private EditText timeTextView;
     TaskDBHelper mydb;
     DatePickerDialog dpd;
     TimePickerDialog tpd;
@@ -37,6 +36,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     String dateFinal;
     String nameFinal;
     String timeFinal;
+    Spinner taskPrioritySpinner;
+    ArrayAdapter<String> spinnerAdapter;
     String priorityFinal;
 
     Intent intent;
@@ -71,12 +72,11 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-        Spinner taskPrioritySpinner = (Spinner) findViewById(R.id.task_priority);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(AddTask.this,
+        taskPrioritySpinner = (Spinner) findViewById(R.id.task_priority);
+        spinnerAdapter = new ArrayAdapter<String>(AddTask.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.priorityValues));
-        //spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskPrioritySpinner.setAdapter(spinnerAdapter);
-        priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
 
         if (isUpdate) {
             init_update();
@@ -111,9 +111,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             startHour = cal.get(Calendar.HOUR_OF_DAY);
             startMinute = cal.get(Calendar.MINUTE);
             startSecond = cal.get(Calendar.SECOND);
-            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "kk:mm"));
-
-            //task_priority.setText(task.getString(4).toString());
+            task_time.setText(Function.Epoch2TimeString(task.getString(3).toString(), "kk:mm"));
         }
     }
 
@@ -135,6 +133,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         nameFinal = task_name.getText().toString();
         dateFinal = task_date.getText().toString();
         timeFinal = task_time.getText().toString();
+        priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
 
         /* Checking */
         if (nameFinal.trim().length() < 1) {
