@@ -25,9 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Ferdousur Rahman Sarker on 3/17/2018.
- */
 
 public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private EditText timeTextView;
@@ -112,7 +109,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             startHour = cal.get(Calendar.HOUR_OF_DAY);
             startMinute = cal.get(Calendar.MINUTE);
             startSecond = cal.get(Calendar.SECOND);
-            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "hh:mm a"));
+            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "kk:mm"));
             //task_priority.setText(task.getString(1).toString());
         }
     }

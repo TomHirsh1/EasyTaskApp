@@ -6,16 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 
-/**
- * Created by Ferdousur Rahman Sarker on 3/19/2018.
- */
 
 public class TaskDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ToDoDBHelper.db";
@@ -53,7 +49,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
 
     private long getTime(String hour){
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "hh:mm a", Locale.getDefault());
+                "kk:mm", Locale.getDefault());
         Date time = new Date();
         try {
             time = dateFormat.parse(hour);
@@ -102,6 +98,13 @@ public class TaskDBHelper extends SQLiteOpenHelper {
     public Cursor getDataSpecific(String id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery("select * from "+CONTACTS_TABLE_NAME+" WHERE id = '"+id+"' order by id desc", null);
+        return res;
+    }
+
+    public Cursor getDataOverDue(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery("select * from "+CONTACTS_TABLE_NAME+
+                " WHERE date(datetime(dateStr / 1000 , 'unixepoch', 'localtime')) < date('now', 'localtime') order by id desc", null);
         return res;
     }
 

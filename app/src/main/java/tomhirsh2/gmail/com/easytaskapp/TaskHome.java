@@ -15,20 +15,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-
-/**
- * Created by Ferdousur Rahman Sarker on 3/16/2018.
- */
 
 public class TaskHome extends AppCompatActivity {
 
     Activity activity;
     TaskDBHelper mydb;
-    NoScrollListView taskListToday, taskListTomorrow, taskListUpcoming;
+    NoScrollListView taskListOverDue, taskListToday, taskListTomorrow, taskListUpcoming;
     NestedScrollView scrollView;
     ProgressBar loader;
-    TextView todayText,tomorrowText,upcomingText;
+    TextView overDueText, todayText, tomorrowText, upcomingText;
+    ArrayList<HashMap<String, String>> overDueList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> todayList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> tomorrowList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> upcomingList = new ArrayList<HashMap<String, String>>();
@@ -50,10 +48,12 @@ public class TaskHome extends AppCompatActivity {
         mydb = new TaskDBHelper(activity);
         scrollView = (NestedScrollView) findViewById(R.id.scrollView);
         loader = (ProgressBar) findViewById(R.id.loader);
+        taskListOverDue = (NoScrollListView) findViewById(R.id.taskListOverDue);
         taskListToday = (NoScrollListView) findViewById(R.id.taskListToday);
         taskListTomorrow = (NoScrollListView) findViewById(R.id.taskListTomorrow);
         taskListUpcoming = (NoScrollListView) findViewById(R.id.taskListUpcoming);
 
+        overDueText = (TextView) findViewById(R.id.overDueText);
         todayText = (TextView) findViewById(R.id.todayText);
         tomorrowText = (TextView) findViewById(R.id.tomorrowText);
         upcomingText = (TextView) findViewById(R.id.upcomingText);
@@ -84,6 +84,7 @@ public class TaskHome extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            overDueList.clear();
             todayList.clear();
             tomorrowList.clear();
             upcomingList.clear();
@@ -91,6 +92,11 @@ public class TaskHome extends AppCompatActivity {
 
         protected String doInBackground(String... args) {
             String xml = "";
+
+            /* ===== OVERDUE ========*/
+            Cursor overDue = mydb.getDataOverDue();
+            loadDataList(overDue, overDueList);
+            /* ===== OVERDUE ========*/
 
             /* ===== TODAY ========*/
             Cursor today = mydb.getDataToday();
@@ -112,9 +118,16 @@ public class TaskHome extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String xml) {
+            loadListView(taskListOverDue,overDueList);
             loadListView(taskListToday,todayList);
             loadListView(taskListTomorrow,tomorrowList);
             loadListView(taskListUpcoming,upcomingList);
+
+            if(overDueList.size()>0){
+                overDueText.setVisibility(View.VISIBLE);
+            }else{
+                overDueText.setVisibility(View.GONE);
+            }
 
             if(todayList.size()>0){
                 todayText.setVisibility(View.VISIBLE);
@@ -140,10 +153,9 @@ public class TaskHome extends AppCompatActivity {
     }
 
 
-
     public void loadDataList(Cursor cursor, ArrayList<HashMap<String, String>> dataList)
     {
-        if(cursor!=null ) {
+        if(cursor != null ) {
             cursor.moveToFirst();
             while (cursor.isAfterLast() == false) {
 
@@ -151,7 +163,7 @@ public class TaskHome extends AppCompatActivity {
                 mapToday.put(KEY_ID, cursor.getString(0).toString());
                 mapToday.put(KEY_TASK, cursor.getString(1).toString());
                 mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd-MM-yyyy"));
-                mapToday.put(KEY_TIME, Function.Epoch2TimeString(cursor.getString(3).toString(), "hh:mm a"));
+                mapToday.put(KEY_TIME, Function.Epoch2TimeString(cursor.getString(3).toString(), "kk:mm"));
                 //mapToday.put(KEY_PRIORITY, cursor.getString(4).toString());
                 dataList.add(mapToday);
                 cursor.moveToNext();

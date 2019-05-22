@@ -6,9 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.time.format.DecimalStyle;
 
-/**
- * Created by Ferdousur Rahman Sarker on 3/21/2018.
- */
 
 public class Function {
 
