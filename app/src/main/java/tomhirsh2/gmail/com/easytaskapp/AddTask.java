@@ -111,7 +111,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             startHour = cal.get(Calendar.HOUR_OF_DAY);
             startMinute = cal.get(Calendar.MINUTE);
             startSecond = cal.get(Calendar.SECOND);
-            task_time.setText(Function.Epoch2TimeString(task.getString(3).toString(), "kk:mm"));
+            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "kk:mm"));
 
             //task_priority.setText(task.getString(4).toString());
         }
