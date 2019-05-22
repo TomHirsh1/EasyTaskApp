@@ -1,5 +1,6 @@
 package tomhirsh2.gmail.com.easytaskapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -72,8 +73,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
         Spinner taskPrioritySpinner = (Spinner) findViewById(R.id.task_priority);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(AddTask.this,
-                android.R.layout.simple_expandable_list_item_1, getResources().getStringArray(R.array.priorityValues));
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.priorityValues));
+        //spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskPrioritySpinner.setAdapter(spinnerAdapter);
         priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
 
@@ -93,13 +94,14 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
         EditText task_time = (EditText) findViewById(R.id.task_time);
-        //EditText task_priority = (EditText) findViewById(R.id.task_priority);
+        //@SuppressLint("WrongViewCast") EditText task_priority = (EditText) findViewById(R.id.task_priority);
         toolbar_task_add_title.setText("Update");
         Cursor task = mydb.getDataSpecific(id);
         if (task != null) {
             task.moveToFirst();
 
             task_name.setText(task.getString(1).toString());
+
             Calendar cal = Function.Epoch2Calender(task.getString(2).toString());
             startYear = cal.get(Calendar.YEAR);
             startMonth = cal.get(Calendar.MONTH);
@@ -109,8 +111,9 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             startHour = cal.get(Calendar.HOUR_OF_DAY);
             startMinute = cal.get(Calendar.MINUTE);
             startSecond = cal.get(Calendar.SECOND);
-            task_time.setText(Function.Epoch2TimeString(task.getString(2).toString(), "kk:mm"));
-            //task_priority.setText(task.getString(1).toString());
+            task_time.setText(Function.Epoch2TimeString(task.getString(3).toString(), "kk:mm"));
+
+            //task_priority.setText(task.getString(4).toString());
         }
     }
 
@@ -151,10 +154,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
         if (errorStep == 0) {
             if (isUpdate) {
-                mydb.updateContact(id, nameFinal, dateFinal, timeFinal);
+                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated.", Toast.LENGTH_SHORT).show();
             } else {
-                mydb.insertContact(nameFinal, dateFinal, timeFinal);
+                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal);
                 Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
             }
 
