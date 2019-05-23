@@ -40,7 +40,6 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     Spinner taskPrioritySpinner;
     ArrayAdapter<String> spinnerAdapter;
     String priorityFinal;
-
     String locationFinal;
 
     Intent intent;
@@ -162,10 +161,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
         if (errorStep == 0) {
             if (isUpdate) {
-                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
+                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated.", Toast.LENGTH_SHORT).show();
             } else {
-                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
+                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal);
                 Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
             }
 

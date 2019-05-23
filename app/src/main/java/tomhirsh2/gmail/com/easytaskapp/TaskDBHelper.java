@@ -26,7 +26,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "CREATE TABLE "+CONTACTS_TABLE_NAME +
-                        "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER, timeStr INTEGER, priority TEXT, location TEXT)"
+                        "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER, timeStr INTEGER, priority TEXT)"
         );
     }
 
@@ -58,7 +58,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertContact(String task, String dateStr, String timeStr, String priority, String location){
+    public boolean insertContact(String task, String dateStr, String timeStr, String priority){
         Date date;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -66,20 +66,20 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         contentValues.put("dateStr", getDate(dateStr));
         contentValues.put("timeStr", getTime(timeStr));
         contentValues.put("priority", priority);
-        contentValues.put("location", location);
+        //contentValues.put("location", location);
 
         db.insert(CONTACTS_TABLE_NAME, null, contentValues);
         return true;
     }
 
-    public boolean updateContact(String id, String task, String dateStr, String timeStr, String priority, String location){
+    public boolean updateContact(String id, String task, String dateStr, String timeStr, String priority){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("task", task);
         contentValues.put("dateStr", getDate(dateStr));
         contentValues.put("timeStr", getTime(timeStr));
         contentValues.put("priority", priority);
-        contentValues.put("location", location);
+        //contentValues.put("location", location);
 
         db.update(CONTACTS_TABLE_NAME, contentValues, "id = ? ", new String[] { id } );
         return true;

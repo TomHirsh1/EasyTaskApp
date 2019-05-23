@@ -55,7 +55,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_maps);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-        checkUserLocationPermmision();
+        checkUserLocationPermission();
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -71,7 +71,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
             mMap.setMyLocationEnabled(true);
         }
     }
-    public Boolean checkUserLocationPermmision(){
+    public Boolean checkUserLocationPermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED  ){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code );
@@ -99,7 +99,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                             mMap.setMyLocationEnabled(true);
                     }
                     else{
-                        Toast.makeText(this, "pemission denied ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "permission denied ", Toast.LENGTH_SHORT).show();
                     }
                     return;
                 }
