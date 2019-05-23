@@ -1,25 +1,31 @@
 package tomhirsh2.gmail.com.easytaskapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -42,6 +49,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     private Location lastLocation;
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code=99;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +70,6 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
     }
     public Boolean checkUserLocationPermmision(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED  ){
@@ -127,44 +134,45 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         }
     }
 
-        public void onClick(View v){
-            switch(v.getId()){
-                case R.id.search_address:
-                    EditText addressField = (EditText)findViewById(R.id.location_search);
-                    String address = addressField.getText().toString();
-                    List<Address> addressList = null;
-                    MarkerOptions userMarkerOptions = new MarkerOptions();
-                    if(!TextUtils.isEmpty(address)){
-                        Geocoder geocoder = new Geocoder(this);
-                        try {
-                            addressList = geocoder.getFromLocationName(address,6);
-                            if(addressList!= null) {
-                                for (int i = 0; i < addressList.size(); i++) {
-                                    Address userAddress = addressList.get(i);
-                                    LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.search_address:
+                EditText addressField = (EditText)findViewById(R.id.location_search);
+                String searchAddress = addressField.getText().toString();
+                List<Address> addressList = new ArrayList<>();
+                MarkerOptions userMarkerOptions = new MarkerOptions();
+                if(!TextUtils.isEmpty(searchAddress)){
+                    Geocoder geocoder = new Geocoder(this);
+                    try {
+                        addressList = geocoder.getFromLocationName(searchAddress,6);
+                        if(addressList != null) {
+                            for (int i = 0; i < addressList.size(); i++) {
+                                Address userAddress = addressList.get(i);
+                                LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
 
-                                    userMarkerOptions.position(latLng);
-                                    userMarkerOptions.title(address);
-                                    userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                                    mMap.addMarker(userMarkerOptions);
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
-                                }
-                            }
-                            else{
-                                Toast.makeText(this,"Location not found...",Toast.LENGTH_SHORT).show();
+                                userMarkerOptions.position(latLng);
+                                userMarkerOptions.title(searchAddress);
+                                userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                                mMap.addMarker(userMarkerOptions);
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+                                hideSoftKeyboard();
                             }
                         }
-                        catch (IOException e) {
-                            e.printStackTrace();
+                        else{
+                            Toast.makeText(this,"Location not found...",Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else{
-                        Toast.makeText(this,"please write any location name",Toast.LENGTH_SHORT).show();
+                    catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    break;
-            }
+                }
+                else{
+                    Toast.makeText(this,"please write any location name",Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
+    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -185,5 +193,13 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    private void hideSoftKeyboard() {
+        View view = this.getCurrentFocus();
+        if(view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
