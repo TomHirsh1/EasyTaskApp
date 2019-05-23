@@ -48,7 +48,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
-    private static final int Request_User_Location_Code=99;
+    private static final int Request_User_Location_Code = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,19 +90,19 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch(requestCode){
             case Request_User_Location_Code:
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                if(ContextCompat.checkSelfPermission
-                        (this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                        if( googleApiClient == null){
-                            buildGoogleApiClient();
-                        }
-                        mMap.setMyLocationEnabled(true);
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if(ContextCompat.checkSelfPermission
+                            (this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                            if( googleApiClient == null){
+                                buildGoogleApiClient();
+                            }
+                            mMap.setMyLocationEnabled(true);
+                    }
+                    else{
+                        Toast.makeText(this, "pemission denied ", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
                 }
-                else{
-                    Toast.makeText(this, "pemission denied ", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
         }
     }
 
@@ -124,10 +124,10 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("user current Location");
+        markerOptions.title("User Current Location");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentUserLocationMarker = mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.zoomBy(18));
+        mMap.moveCamera(CameraUpdateFactory.zoomBy(17));
 
         if(googleApiClient != null){
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
@@ -151,7 +151,8 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                                 LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
 
                                 userMarkerOptions.position(latLng);
-                                userMarkerOptions.title(searchAddress);
+                                userMarkerOptions.title(userAddress.getAddressLine(i));
+                                //userMarkerOptions.title(searchAddress);
                                 userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                                 mMap.addMarker(userMarkerOptions);
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

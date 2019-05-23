@@ -176,11 +176,12 @@
             android:text="Location"
             android:textSize="16sp"
             android:textColor="#CCCCCC"/>
+
         <Button
             android:id="@+id/location_button"
-            android:layout_width="357dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Location" />
+            android:text="Get Location" />
 
     </LinearLayout>
 
