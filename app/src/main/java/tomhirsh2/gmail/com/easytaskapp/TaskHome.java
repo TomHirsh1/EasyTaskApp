@@ -3,12 +3,14 @@ package tomhirsh2.gmail.com.easytaskapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,6 +40,8 @@ public class TaskHome extends AppCompatActivity {
     public static String KEY_PRIORITY = "priority";
     public static String KEY_LOCATION = "location";
 
+    //TextView text;
+    //CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,21 @@ public class TaskHome extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         populateData();
+
+        //text = findViewById(R.id.task_date);
+        //checkBox = findViewById(R.id.task_check);
+        //Strikethrough task:
+        //checkBox.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        if(!text.getPaint().isStrikeThruText()) {
+        //            text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        //        }
+        //        else {
+        //            text.setPaintFlags(text.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        //        }
+        //    }
+        //});
     }
 
     class LoadTask extends AsyncTask<String, Void, String> {
@@ -165,7 +184,7 @@ public class TaskHome extends AppCompatActivity {
                 mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd-MM-yyyy"));
                 mapToday.put(KEY_TIME, Function.Epoch2TimeString(cursor.getString(3).toString(), "kk:mm"));
                 mapToday.put(KEY_PRIORITY, cursor.getString(4).toString());
-                //mapToday.put(KEY_LOCATION, cursor.getString(4).toString());
+                //mapToday.put(KEY_LOCATION, cursor.getString(5).toString());
                 dataList.add(mapToday);
                 cursor.moveToNext();
             }

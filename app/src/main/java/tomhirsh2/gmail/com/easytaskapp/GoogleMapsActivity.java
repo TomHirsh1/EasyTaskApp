@@ -50,6 +50,9 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
+    String chosenAddress = "Location is not set";
+    boolean isChosen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,43 +138,44 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     }
 
     public void onClick(View v){
-        switch(v.getId()){
-            case R.id.search_address:
-                EditText addressField = (EditText)findViewById(R.id.location_search);
-                String searchAddress = addressField.getText().toString();
-                List<Address> addressList = new ArrayList<>();
-                MarkerOptions userMarkerOptions = new MarkerOptions();
-                if(!TextUtils.isEmpty(searchAddress)){
-                    Geocoder geocoder = new Geocoder(this);
-                    try {
-                        addressList = geocoder.getFromLocationName(searchAddress,6);
-                        if(addressList != null) {
-                            for (int i = 0; i < addressList.size(); i++) {
-                                Address userAddress = addressList.get(i);
-                                LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
+        if(!isChosen) {
+            switch (v.getId()) {
+                case R.id.search_address:
+                    EditText addressField = (EditText) findViewById(R.id.location_search);
+                    String searchAddress = addressField.getText().toString();
+                    List<Address> addressList = new ArrayList<>();
+                    MarkerOptions userMarkerOptions = new MarkerOptions();
+                    if (!TextUtils.isEmpty(searchAddress)) {
+                        Geocoder geocoder = new Geocoder(this);
+                        try {
+                            addressList = geocoder.getFromLocationName(searchAddress, 6);
+                            if (addressList != null) {
+                                for (int i = 0; i < addressList.size(); i++) {
+                                    Address userAddress = addressList.get(i);
+                                    LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
 
-                                userMarkerOptions.position(latLng);
-                                userMarkerOptions.title(userAddress.getAddressLine(i));
-                                //userMarkerOptions.title(searchAddress);
-                                userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                                mMap.addMarker(userMarkerOptions);
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
-                                hideSoftKeyboard();
+                                    chosenAddress = userAddress.getAddressLine(i);
+                                    userMarkerOptions.position(latLng);
+                                    userMarkerOptions.title(userAddress.getAddressLine(i));
+                                    //userMarkerOptions.title(searchAddress);
+                                    userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                                    mMap.addMarker(userMarkerOptions);
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+                                    isChosen = true;
+                                    hideSoftKeyboard();
+                                }
+                            } else {
+                                Toast.makeText(this, "Location not found...", Toast.LENGTH_SHORT).show();
                             }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        else{
-                            Toast.makeText(this,"Location not found...",Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Toast.makeText(this, "please write any location name", Toast.LENGTH_SHORT).show();
                     }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    Toast.makeText(this,"please write any location name",Toast.LENGTH_SHORT).show();
-                }
-                break;
+                    break;
+            }
         }
     }
 

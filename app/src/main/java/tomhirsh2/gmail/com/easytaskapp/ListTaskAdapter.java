@@ -18,7 +18,7 @@ public class ListTaskAdapter extends BaseAdapter {
 
     public ListTaskAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
         activity = a;
-        data=d;
+        data = d;
     }
     public int getCount() {
         return data.size();

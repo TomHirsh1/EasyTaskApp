@@ -1,9 +1,11 @@
 package tomhirsh2.gmail.com.easytaskapp;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -40,7 +42,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     Spinner taskPrioritySpinner;
     ArrayAdapter<String> spinnerAdapter;
     String priorityFinal;
-    String locationFinal;
+    String locationFinal = "Location is not set";
 
     Intent intent;
     Boolean isUpdate;
@@ -142,6 +144,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
         //locationFinal = location_button.getText().toString();
         //locationFinal = task_location.getText().toString();
+        //GoogleMapsActivity gma = new GoogleMapsActivity();
+        //locationFinal = gma.chosenAddress;
 
         /* Checking */
         if (nameFinal.trim().length() < 1) {
@@ -175,9 +179,24 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     public void deleteAddTask(View v) {
-      mydb.deleteTask(id);
-        Toast.makeText(getApplicationContext(), "Task Deleted.", Toast.LENGTH_SHORT).show();
-        finish();
+        AlertDialog.Builder alertDlg = new AlertDialog.Builder(this);
+        alertDlg.setMessage("Delete task?");
+        alertDlg.setCancelable(false);
+        alertDlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mydb.deleteTask(id);
+                Toast.makeText(getApplicationContext(), "Task Deleted.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        alertDlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // nothing to do
+            }
+        });
+        alertDlg.create().show();
     }
 
     @Override
