@@ -85,10 +85,9 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor deleteTask(String id){
+    public boolean deleteTask(String id){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("DELETE FROM "+CONTACTS_TABLE_NAME+" WHERE id = '"+id+"' order by id desc", null);
-        return res;
+        return db.delete(CONTACTS_TABLE_NAME, "id = ? ", new String[] { id }) > 0;
     }
 
     public Cursor getData(){

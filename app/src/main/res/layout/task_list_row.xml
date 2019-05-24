@@ -5,37 +5,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:descendantFocusability="blocksDescendants">
 
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="15dip"
+        android:padding="3dip"
         android:weightSum="7">
 
         <!--  ListRow Left side Thumbnail image -->
         <LinearLayout
             android:id="@+id/thumbnail"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="3dip"
             android:visibility="visible">
 
+            <CheckBox
+                android:id="@+id/task_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/mdtp_light_gray"/>
+
             <TextView
                 android:id="@+id/task_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="o"
                 android:textColor="#444444"
                 android:textSize="20sp"
                 android:visibility="visible" />
+
         </LinearLayout>
 
 
         <LinearLayout
             android:id="@+id/centerContent"
-            android:layout_width="345dp"
+            android:layout_width="366dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="4"

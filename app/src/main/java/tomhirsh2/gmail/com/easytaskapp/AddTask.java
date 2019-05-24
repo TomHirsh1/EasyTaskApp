@@ -174,6 +174,12 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         }
     }
 
+    public void deleteAddTask(View v) {
+      mydb.deleteTask(id);
+        Toast.makeText(getApplicationContext(), "Task Deleted.", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
