@@ -164,15 +164,16 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
                                     isChosen = true;
                                     hideSoftKeyboard();
+                                    Toast.makeText(this, "Location was saved", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(this, "Location not found...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        Toast.makeText(this, "please write any location name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Please write any location name", Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
