@@ -144,8 +144,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
         //locationFinal = location_button.getText().toString();
         //locationFinal = task_location.getText().toString();
-        //GoogleMapsActivity gma = new GoogleMapsActivity();
-        //locationFinal = gma.chosenAddress;
+        GoogleMapsActivity gma = new GoogleMapsActivity();
+        locationFinal = gma.chosenAddress;
 
         /* Checking */
         if (nameFinal.trim().length() < 1) {
@@ -165,10 +165,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
         if (errorStep == 0) {
             if (isUpdate) {
-                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal);
+                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated.", Toast.LENGTH_SHORT).show();
             } else {
-                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal);
+                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
                 Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
             }
 

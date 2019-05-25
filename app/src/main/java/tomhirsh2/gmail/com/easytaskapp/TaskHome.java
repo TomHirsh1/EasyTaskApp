@@ -184,7 +184,7 @@ public class TaskHome extends AppCompatActivity {
                 mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd-MM-yyyy"));
                 mapToday.put(KEY_TIME, Function.Epoch2TimeString(cursor.getString(3).toString(), "kk:mm"));
                 mapToday.put(KEY_PRIORITY, cursor.getString(4).toString());
-                //mapToday.put(KEY_LOCATION, cursor.getString(5).toString());
+                mapToday.put(KEY_LOCATION, cursor.getString(5).toString());
                 dataList.add(mapToday);
                 cursor.moveToNext();
             }

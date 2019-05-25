@@ -50,7 +50,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
-    String chosenAddress = "Location is not set";
+    static String chosenAddress = "This works";
     boolean isChosen = false;
 
     @Override
