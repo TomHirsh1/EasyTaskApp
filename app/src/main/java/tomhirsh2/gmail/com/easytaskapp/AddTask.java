@@ -42,7 +42,9 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     Spinner taskPrioritySpinner;
     ArrayAdapter<String> spinnerAdapter;
     String priorityFinal;
+
     String locationFinal = "Location is not set";
+    boolean isGetLocationClicked = false;
 
     Intent intent;
     Boolean isUpdate;
@@ -70,9 +72,9 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         startSecond = cal.get(Calendar.SECOND);
 
         final Button location_button = findViewById(R.id.location_button);
-        //locationFinal = location_button.getText().toString();
         location_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                isGetLocationClicked = true;
                 openMapActivity();
             }
         });
@@ -99,8 +101,6 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
         EditText task_time = (EditText) findViewById(R.id.task_time);
-        //TextView task_location = (TextView) findViewById(R.id.task_Address_Text);
-        //@SuppressLint("WrongViewCast") EditText task_priority = (EditText) findViewById(R.id.task_priority);
         toolbar_task_add_title.setText("Update");
         Cursor task = mydb.getDataSpecific(id);
         if (task != null) {
@@ -136,16 +136,16 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
         EditText task_time = (EditText) findViewById(R.id.task_time);
-        //TextView task_location = (TextView) findViewById(R.id.task_address);
-        //@SuppressLint("WrongViewCast") EditText task_location = (EditText) findViewById(R.id.task_location);
         nameFinal = task_name.getText().toString();
         dateFinal = task_date.getText().toString();
         timeFinal = task_time.getText().toString();
         priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
-        //locationFinal = location_button.getText().toString();
-        //locationFinal = task_location.getText().toString();
-        GoogleMapsActivity gma = new GoogleMapsActivity();
-        locationFinal = gma.chosenAddress;
+        if(isGetLocationClicked) {
+            GoogleMapsActivity gma = new GoogleMapsActivity();
+            locationFinal = gma.chosenAddress;
+            isGetLocationClicked = false;
+        }
+
 
         /* Checking */
         if (nameFinal.trim().length() < 1) {
@@ -167,9 +167,11 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             if (isUpdate) {
                 mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated.", Toast.LENGTH_SHORT).show();
+                locationFinal = "Location is not set";
             } else {
                 mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
                 Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
+                locationFinal = "Location is not set";
             }
 
             finish();
