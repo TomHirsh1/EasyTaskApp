@@ -103,6 +103,12 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getDataLocation(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery("select location from "+CONTACTS_TABLE_NAME+" WHERE id = '"+id+"' order by id desc", null);
+        return res;
+    }
+
     public Cursor getDataOverDue(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery("select * from "+CONTACTS_TABLE_NAME+

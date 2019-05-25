@@ -52,7 +52,6 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
 
     static String chosenAddress = "Location is not set";
     boolean isChosen = false;
-    String anotherAddress = "Dimona";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

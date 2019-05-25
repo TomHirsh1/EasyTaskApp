@@ -45,6 +45,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
     String locationFinal = "Location is not set";
     boolean isGetLocationClicked = false;
+    boolean isResetLocationClicked = false;
 
     Intent intent;
     Boolean isUpdate;
@@ -79,6 +80,15 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
+        final Button reset_location_button = findViewById(R.id.reset_location_button);
+        reset_location_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationFinal = "Location is not set";
+                Toast.makeText(getApplicationContext(), "Location reset.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         taskPrioritySpinner = (Spinner) findViewById(R.id.task_priority);
         spinnerAdapter = new ArrayAdapter<String>(AddTask.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.priorityValues));
@@ -101,12 +111,14 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
         EditText task_time = (EditText) findViewById(R.id.task_time);
+        TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
         toolbar_task_add_title.setText("Update");
         Cursor task = mydb.getDataSpecific(id);
         if (task != null) {
             task.moveToFirst();
 
             task_name.setText(task.getString(1).toString());
+            task_location.setText(task.getString(5).toString());
 
             Calendar cal = Function.Epoch2Calender(task.getString(2).toString());
             startYear = cal.get(Calendar.YEAR);
@@ -136,16 +148,18 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_name = (EditText) findViewById(R.id.task_name);
         EditText task_date = (EditText) findViewById(R.id.task_date);
         EditText task_time = (EditText) findViewById(R.id.task_time);
+        TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
         nameFinal = task_name.getText().toString();
         dateFinal = task_date.getText().toString();
         timeFinal = task_time.getText().toString();
         priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
+
         if(isGetLocationClicked) {
             GoogleMapsActivity gma = new GoogleMapsActivity();
             locationFinal = gma.chosenAddress;
             isGetLocationClicked = false;
+            task_location.setText(locationFinal);
         }
-
 
         /* Checking */
         if (nameFinal.trim().length() < 1) {
