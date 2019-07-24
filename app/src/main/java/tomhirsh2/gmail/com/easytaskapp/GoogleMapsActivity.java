@@ -16,8 +16,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,6 +26,9 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -38,7 +39,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -57,6 +58,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_maps);
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
         checkUserLocationPermission();
         }
@@ -75,12 +77,12 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         }
     }
     public Boolean checkUserLocationPermission(){
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED  ){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code );
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code);
             }
             else{
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code );
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code);
             }
             return false;
         }
@@ -94,18 +96,17 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         switch(requestCode){
             case Request_User_Location_Code:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    if(ContextCompat.checkSelfPermission
-                            (this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                             if( googleApiClient == null){
                                 buildGoogleApiClient();
                             }
                             mMap.setMyLocationEnabled(true);
                     }
-                    else{
-                        Toast.makeText(this, "permission denied ", Toast.LENGTH_SHORT).show();
-                    }
-                    return;
                 }
+                else{
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
         }
     }
 
@@ -124,13 +125,16 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         if(currentUserLocationMarker != null){
             currentUserLocationMarker.remove();
         }
-        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("User Current Location");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentUserLocationMarker = mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.zoomBy(17));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 18.0f));
+        //mMap.moveCamera(CameraUpdateFactory.zoomBy(17));
 
         if(googleApiClient != null){
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
@@ -143,7 +147,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                 case R.id.search_address:
                     EditText addressField = (EditText) findViewById(R.id.location_search);
                     String searchAddress = addressField.getText().toString();
-                    List<Address> addressList = new ArrayList<>();
+                    List<Address> addressList = null;
                     MarkerOptions userMarkerOptions = new MarkerOptions();
                     if (!TextUtils.isEmpty(searchAddress)) {
                         Geocoder geocoder = new Geocoder(this);
@@ -164,7 +168,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
                                     isChosen = true;
                                     hideSoftKeyboard();
-                                    Toast.makeText(this, "Location was saved", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, "Location was saved", Toast.LENGTH_LONG).show();
                                 }
                             } else {
                                 Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
@@ -183,11 +187,11 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(1100);
-        locationRequest.setFastestInterval(1100);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
       if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest,this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
 
     }
 

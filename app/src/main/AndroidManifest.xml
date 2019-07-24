@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeToolBar">
+        <service
+            android:name=".services.LocationService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <receiver android:name=".MyLocationService" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -32,8 +38,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCuT2zGu7gqdfrYBC4oxSz8iAdJryofXbA" />
 
-        <activity android:name=".AddTask"/>
-        <activity android:name=".GoogleMapsActivity"/>
+        <activity android:name=".AddTask" />
+        <activity android:name=".GoogleMapsActivity" />
         <activity android:name=".TaskHome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +48,8 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".services.LocationJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

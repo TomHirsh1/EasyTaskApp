@@ -42,11 +42,9 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     Spinner taskPrioritySpinner;
     ArrayAdapter<String> spinnerAdapter;
     String priorityFinal;
-    //int prioritySpinnerPosition;
 
     String locationFinal = "Location is not set";
     boolean isGetLocationClicked = false;
-    boolean isResetLocationClicked = false;
 
     Intent intent;
     Boolean isUpdate;
@@ -122,12 +120,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             String currentPrioritySpinnerValue = task.getString(4).toString();
             if(currentPrioritySpinnerValue.equals("Low"))
                 taskPrioritySpinner.setSelection(0);
-            else if(currentPrioritySpinnerValue.equals("Moderate")) {
+            else if(currentPrioritySpinnerValue.equals("Moderate"))
                 taskPrioritySpinner.setSelection(1);
-            }
-            else {
+            else
                 taskPrioritySpinner.setSelection(2);
-            }
 
             task_name.setText(task.getString(1).toString());
             task_location.setText(task.getString(5).toString());
@@ -165,7 +161,16 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         dateFinal = task_date.getText().toString();
         timeFinal = task_time.getText().toString();
         priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
-        //prioritySpinnerPosition = taskPrioritySpinner.getSelectedItemPosition();
+
+        /*
+        intent = getIntent();
+        isUpdate = intent.getBooleanExtra("isUpdate", false);
+        id = intent.getStringExtra("id");
+        Cursor task = mydb.getDataSpecific(id);
+        if (isUpdate && !task.getString(5).equals("Location is not set") && !isGetLocationClicked) {
+            locationFinal = task.getString(5).toString();
+        }
+        */
 
         if(isGetLocationClicked) {
             GoogleMapsActivity gma = new GoogleMapsActivity();

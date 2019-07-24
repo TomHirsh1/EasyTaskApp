@@ -145,7 +145,6 @@
             android:id="@+id/task_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:background="@android:color/white"
             android:ems="10"
@@ -175,6 +174,7 @@
             android:id="@+id/task_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:background="@android:color/white"
             android:spinnerMode="dropdown" />
 
@@ -196,8 +196,6 @@
             android:id="@+id/taskShowAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
             android:layout_marginEnd="0dp"
             android:background="@color/mdtp_white"
             android:padding="10dp"
