@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1E1D25">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_task"
         android:layout_alignParentTop="true"
@@ -34,6 +35,8 @@
                 android:textColor="#ffffff"
                 android:textSize="18dp"
                 android:textStyle="bold" />
+
+            <!-- this was originally created
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -42,6 +45,7 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_action_add"
                 android:onClick="openAddTask"/>
+                -->
 
         </LinearLayout>
 
@@ -64,6 +68,8 @@
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -75,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:gravity="start"
                 android:text="OverDue"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
@@ -105,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:gravity="start"
                 android:text="Today"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
@@ -133,6 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:gravity="start"
                 android:text="Tomorrow"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
@@ -161,6 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:gravity="start"
                 android:text="Upcoming Next"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
@@ -186,5 +196,24 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_action_add"
+            app:backgroundTint="@color/colorPrimary"
+            android:onClick="openAddTask"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
 </RelativeLayout>

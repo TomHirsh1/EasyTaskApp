@@ -3,8 +3,12 @@ package tomhirsh2.gmail.com.easytaskapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +31,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         db.execSQL(
                 "CREATE TABLE "+CONTACTS_TABLE_NAME +
                         "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER, timeStr INTEGER, priority TEXT" +
-                        ", location TEXT)"
+                        ", location TEXT, latitude REAL, longitude REAL)"
         );
     }
 
@@ -59,8 +63,8 @@ public class TaskDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertContact(String task, String dateStr, String timeStr, String priority, String location){
-        Date date;
+    public boolean insertContact(String task, String dateStr, String timeStr, String priority, String location, String latitude, String longitude){
+        //Date date;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("task", task);
@@ -68,12 +72,14 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         contentValues.put("timeStr", getTime(timeStr));
         contentValues.put("priority", priority);
         contentValues.put("location", location);
+        contentValues.put("latitude", latitude);
+        contentValues.put("longitude", longitude);
 
         db.insert(CONTACTS_TABLE_NAME, null, contentValues);
         return true;
     }
 
-    public boolean updateContact(String id, String task, String dateStr, String timeStr, String priority, String location){
+    public boolean updateContact(String id, String task, String dateStr, String timeStr, String priority, String location, String latitude, String longitude){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("task", task);
@@ -81,6 +87,8 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         contentValues.put("timeStr", getTime(timeStr));
         contentValues.put("priority", priority);
         contentValues.put("location", location);
+        contentValues.put("latitude", latitude);
+        contentValues.put("longitude", longitude);
 
         db.update(CONTACTS_TABLE_NAME, contentValues, "id = ? ", new String[] { id } );
         return true;
@@ -103,10 +111,52 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Cursor getDataLocation(String id){
+    public String getDataLocation(String id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery("select location from "+CONTACTS_TABLE_NAME+" WHERE id = '"+id+"' order by id desc", null);
-        return res;
+        //Cursor res =  db.rawQuery("select location from "+CONTACTS_TABLE_NAME+" WHERE id = '"+id+"' order by id desc", null);
+
+        String sql = "select location from " + CONTACTS_TABLE_NAME;
+        //String sql = "select location from " + CONTACTS_TABLE_NAME + " where id = '"+id+"'";
+        //String sql = "select location from " + CONTACTS_TABLE_NAME + " where id ="+i;
+        //String sql = "select location from CONTACTS_TABLE_NAME where id='"+id+"';";
+        Cursor cursor = db.rawQuery(sql, null);
+        //Cursor cursor = getReadableDatabase().rawQuery(sql, new String[] {id});
+        String str = "fuck you";
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            //str = cursor.getString(cursor.getColumnIndex("location"));
+            str = cursor.getString(0);
+            //str = "nice";
+        }
+        cursor.close();
+        return str;
+        //return res;
+    }
+
+    public double getDataLatitudeValue(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double latitudeVal = 0;
+        //String sql = "select latitude from " + CONTACTS_TABLE_NAME + " where id = '"+id+"'";
+        //Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor =  db.rawQuery("select latitude from "+CONTACTS_TABLE_NAME+" WHERE id = '"+id+"' order by id desc", null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            latitudeVal = cursor.getDouble(0);
+        }
+        cursor.close();
+        return latitudeVal;
+    }
+
+    public double getDataLongitudeValue(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double longitudeVal = 0;
+        Cursor cursor =  db.rawQuery("select longitude from "+CONTACTS_TABLE_NAME+" WHERE id = '"+id+"' order by id desc", null);
+        if(cursor.moveToFirst()) {
+            longitudeVal = cursor.getDouble(0);
+            longitudeVal = 3;
+        }
+        cursor.close();
+        return longitudeVal;
     }
 
     public Cursor getDataOverDue(){
@@ -135,5 +185,18 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         Cursor res =  db.rawQuery("select * from "+CONTACTS_TABLE_NAME+
                 " WHERE date(datetime(dateStr / 1000 , 'unixepoch', 'localtime')) > date('now', '+1 day', 'localtime') order by id desc", null);
         return res;
+    }
+
+    public int getSize(){
+        //SQLiteDatabase db = this.getReadableDatabase();
+        int taskCount = 0;
+        String sql = "select count(*) from " + CONTACTS_TABLE_NAME;
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            taskCount = cursor.getInt(0);
+        }
+        cursor.close();
+        return taskCount;
     }
 }

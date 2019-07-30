@@ -1,12 +1,14 @@
 package tomhirsh2.gmail.com.easytaskapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,6 +46,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     String priorityFinal;
 
     String locationFinal = "Location is not set";
+    double latitudeValue, longitudeValue;
+    String latitudeStr = "0", longitudeStr = "0";
     boolean isGetLocationClicked = false;
 
     Intent intent;
@@ -84,6 +88,8 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
                 locationFinal = "Location is not set";
+                latitudeValue = 0;
+                longitudeValue = 0;
                 Toast.makeText(getApplicationContext(), "Location reset.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -175,6 +181,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         if(isGetLocationClicked) {
             GoogleMapsActivity gma = new GoogleMapsActivity();
             locationFinal = gma.chosenAddress;
+            latitudeValue = gma.latitudeValue;
+            longitudeValue = gma.longitudeValue;
+            latitudeStr = String.valueOf(latitudeValue);
+            longitudeStr = String.valueOf(longitudeValue);
             isGetLocationClicked = false;
             task_location.setText(locationFinal);
         }
@@ -183,25 +193,31 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         if (nameFinal.trim().length() < 1) {
             errorStep++;
             task_name.setError("Provide a task name.");
+        } else {
+            task_name.setError(null);
         }
 
         if (dateFinal.trim().length() < 4) {
             errorStep++;
             task_date.setError("Provide a specific date");
+        } else {
+            task_date.setError(null);
         }
 
         if (timeFinal.trim().length() < 4) {
             errorStep++;
             task_time.setError("Provide a specific time");
+        } else {
+            task_time.setError(null);
         }
 
         if (errorStep == 0) {
             if (isUpdate) {
-                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
+                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeStr, longitudeStr);
                 Toast.makeText(getApplicationContext(), "Task Updated.", Toast.LENGTH_SHORT).show();
                 locationFinal = "Location is not set";
             } else {
-                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal);
+                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeStr, longitudeStr);
                 Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
                 locationFinal = "Location is not set";
             }

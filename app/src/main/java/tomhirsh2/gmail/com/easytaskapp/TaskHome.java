@@ -127,25 +127,28 @@ public class TaskHome extends AppCompatActivity {
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, getPendingIntent());
     }
 
+    // this function used to update location from background
     private PendingIntent getPendingIntent() {
         Intent intent = new Intent(this, MyLocationService.class);
         intent.setAction(MyLocationService.ACTION_PROCESS_UPDATE);
         return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
+    // this function used to update location from background
     private void buildLocationRequest() {
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(3000);
-        locationRequest.setSmallestDisplacement(10f);
+        locationRequest.setSmallestDisplacement(0);
     }
 
-    public void notifyMyTasks(String value) {
+    // this function used to update location from background
+    public void notifyMyTasks(final String value) {
         TaskHome.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                Toast.makeText(getApplicationContext(), "This runs on foreground", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -282,8 +285,7 @@ public class TaskHome extends AppCompatActivity {
     }
 
 
-    public void loadDataList(Cursor cursor, ArrayList<HashMap<String, String>> dataList)
-    {
+    public void loadDataList(Cursor cursor, ArrayList<HashMap<String, String>> dataList) {
         if(cursor != null ) {
             cursor.moveToFirst();
             while (cursor.isAfterLast() == false) {
@@ -302,8 +304,7 @@ public class TaskHome extends AppCompatActivity {
     }
 
 
-    public void loadListView(ListView listView, final ArrayList<HashMap<String, String>> dataList)
-    {
+    public void loadListView(ListView listView, final ArrayList<HashMap<String, String>> dataList) {
         ListTaskAdapter adapter = new ListTaskAdapter(activity, dataList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
