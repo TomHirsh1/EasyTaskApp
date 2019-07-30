@@ -55,8 +55,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     TaskDBHelper mydb;
     Activity activity;
 
-    // this will be saved for each task:
-    static String chosenAddress = "Location is not set";
+    static String chosenAddress = "Location is not set"; // this will be saved for each task:
     static double latitudeValue, longitudeValue;
     boolean isChosen = false;
 
@@ -155,9 +154,9 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     }
 
     private void displayChosenLocations(int dbSize) {
-        String locationString = "Location is not set";
+        String locationString;
         double latitudeVal, longitudeVal;
-        String id;
+        String id, snippet;
 
         for(int i = 1; i <= dbSize; i++) {
             id = Integer.toString(i);
@@ -166,18 +165,19 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
             latitudeVal = task.getDouble(6);
             longitudeVal = task.getDouble(7);
             locationString = task.getString(5);
+            snippet = task.getString(1);
             task.close();
 
             if(!locationString.equals("Location is not set")) {
                 MarkerOptions userMarkerOptions = new MarkerOptions();
-                    Geocoder geocoder = new Geocoder(this);
-                    if(latitudeVal != 0 && longitudeVal != 0) {
-                        LatLng latLng = new LatLng(latitudeVal, longitudeVal);
-                        userMarkerOptions.position(latLng);
-                        userMarkerOptions.title(locationString);
-                        userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                        mMap.addMarker(userMarkerOptions);
-                    }
+                if(latitudeVal != 0 && longitudeVal != 0) {
+                    LatLng latLng = new LatLng(latitudeVal, longitudeVal);
+                    userMarkerOptions.position(latLng);
+                    userMarkerOptions.title(locationString);
+                    userMarkerOptions.snippet(snippet);
+                    userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    mMap.addMarker(userMarkerOptions);
+                }
             }
         }
     }
@@ -204,7 +204,6 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                                     longitudeValue = userAddress.getLongitude();
                                     userMarkerOptions.position(latLng);
                                     userMarkerOptions.title(userAddress.getAddressLine(i));
-                                    //userMarkerOptions.title(searchAddress);
                                     userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                                     mMap.addMarker(userMarkerOptions);
                                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

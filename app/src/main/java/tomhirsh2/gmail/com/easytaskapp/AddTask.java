@@ -214,11 +214,11 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         if (errorStep == 0) {
             if (isUpdate) {
                 mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeStr, longitudeStr);
-                Toast.makeText(getApplicationContext(), "Task Updated.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Task Updated", Toast.LENGTH_SHORT).show();
                 locationFinal = "Location is not set";
             } else {
                 mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeStr, longitudeStr);
-                Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_SHORT).show();
                 locationFinal = "Location is not set";
             }
 
@@ -236,7 +236,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mydb.deleteTask(id);
-                Toast.makeText(getApplicationContext(), "Task Deleted.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Task Deleted", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

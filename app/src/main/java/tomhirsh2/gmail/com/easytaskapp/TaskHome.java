@@ -62,8 +62,8 @@ public class TaskHome extends AppCompatActivity {
     public static String KEY_LOCATION = "location";
 
     private static final String TAG = "TaskHome";
-    //TextView text;
-    //CheckBox checkBox;
+    TextView text;
+    CheckBox checkBox;
 
     static TaskHome instance;
     LocationRequest locationRequest;
@@ -113,6 +113,24 @@ public class TaskHome extends AppCompatActivity {
         todayText = (TextView) findViewById(R.id.todayText);
         tomorrowText = (TextView) findViewById(R.id.tomorrowText);
         upcomingText = (TextView) findViewById(R.id.upcomingText);
+
+        /*
+        checkBox = (CheckBox) findViewById(R.id.task_check);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked()) {
+                    text = findViewById(R.id.task_name);
+                    if(!text.getPaint().isStrikeThruText()) {
+                        text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    } else {
+                        text.setPaintFlags(text.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    }
+
+                }
+            }
+        });
+        */
     }
 
     private void updateLocation() {
@@ -196,20 +214,22 @@ public class TaskHome extends AppCompatActivity {
         super.onResume();
         populateData();
 
-        //text = findViewById(R.id.task_date);
-        //checkBox = findViewById(R.id.task_check);
-        //Strikethrough task:
-        //checkBox.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        if(!text.getPaint().isStrikeThruText()) {
-        //            text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        //        }
-        //        else {
-        //            text.setPaintFlags(text.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-        //        }
-        //    }
-        //});
+        /*
+        text = findViewById(R.id.task_name);
+        checkBox = findViewById(R.id.task_check);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!text.getPaint().isStrikeThruText()) {
+                    text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                else {
+                    text.setPaintFlags(text.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+            }
+        });
+        */
     }
 
     class LoadTask extends AsyncTask<String, Void, String> {
