@@ -90,7 +90,7 @@ public class TaskHome extends AppCompatActivity {
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(TaskHome.this, "Accept this to track your location", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TaskHome.this, "Accept this to track your location", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

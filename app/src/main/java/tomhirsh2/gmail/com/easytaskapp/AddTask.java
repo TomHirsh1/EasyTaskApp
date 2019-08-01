@@ -1,6 +1,7 @@
 package tomhirsh2.gmail.com.easytaskapp;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,9 +47,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     String priorityFinal;
 
     String locationFinal = "Location is not set";
-    double latitudeValue, longitudeValue;
-    String latitudeStr = "0", longitudeStr = "0";
-    boolean isGetLocationClicked = false;
+    String locationFromGetLocation = "";
+    double latitudeFromGetLocation, longitudeFromGetLocation;
+    String latitudeFinal = "0", longitudeFinal = "0";
+    boolean isGetLocationClicked = false, isResetLocationClicked = false;
 
     Intent intent;
     Boolean isUpdate;
@@ -80,6 +82,44 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
                 isGetLocationClicked = true;
                 openMapActivity();
+                /*
+                GoogleMapsActivity gma = new GoogleMapsActivity();
+                locationFromGetLocation = gma.chosenAddress;
+                latitudeFromGetLocation = gma.latitudeValue;
+                longitudeFromGetLocation = gma.longitudeValue;
+
+                if(isUpdate) {
+                    String originalLocation = "";
+                    Cursor cursor = mydb.getDataSpecific(id);
+                    if(cursor.moveToFirst()) {
+                        //isResetLocationClicked = true;
+                        originalLocation = cursor.getString(5);
+                    }
+                    if(!locationFromGetLocation.equals(originalLocation) && !originalLocation.equals("") && !locationFromGetLocation.equals("Location is not set")) {
+                        locationFinal = locationFromGetLocation;
+                        latitudeFinal = String.valueOf(latitudeFromGetLocation);
+                        longitudeFinal = String.valueOf(longitudeFromGetLocation);
+                        TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
+                        task_location.setText(locationFromGetLocation);
+                    }
+                } else {
+                    locationFinal = locationFromGetLocation;
+                    latitudeFinal = String.valueOf(latitudeFromGetLocation);
+                    longitudeFinal = String.valueOf(longitudeFromGetLocation);
+                    TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
+                    task_location.setText(locationFromGetLocation);
+                }
+
+                Toast.makeText(getApplicationContext(), "Loc: " + locationFromGetLocation, Toast.LENGTH_SHORT).show();
+                if(!locationFromGetLocation.equals("Location is not set")) {
+                    locationFinal = locationFromGetLocation;
+                    latitudeFinal = String.valueOf(latitudeFromGetLocation);
+                    longitudeFinal = String.valueOf(longitudeFromGetLocation);
+                    TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
+                    task_location.setText(locationFinal);
+                }
+                */
+                //isGetLocationClicked = false;
             }
         });
 
@@ -87,10 +127,15 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         reset_location_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isResetLocationClicked = true;
                 locationFinal = "Location is not set";
-                latitudeValue = 0;
-                longitudeValue = 0;
-                Toast.makeText(getApplicationContext(), "Location reset.", Toast.LENGTH_SHORT).show();
+                latitudeFromGetLocation = 0;
+                longitudeFromGetLocation = 0;
+                latitudeFinal = "0";
+                longitudeFinal = "0";
+                TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
+                task_location.setText(locationFinal);
+                Toast.makeText(getApplicationContext(), "Location was reset", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -168,31 +213,22 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         timeFinal = task_time.getText().toString();
         priorityFinal = taskPrioritySpinner.getSelectedItem().toString();
 
-        /*
-        intent = getIntent();
-        isUpdate = intent.getBooleanExtra("isUpdate", false);
-        id = intent.getStringExtra("id");
-        Cursor task = mydb.getDataSpecific(id);
-        if (isUpdate && !task.getString(5).equals("Location is not set") && !isGetLocationClicked) {
-            locationFinal = task.getString(5).toString();
-        }
-        */
-
         if(isGetLocationClicked) {
             GoogleMapsActivity gma = new GoogleMapsActivity();
-            locationFinal = gma.chosenAddress;
-            latitudeValue = gma.latitudeValue;
-            longitudeValue = gma.longitudeValue;
-            latitudeStr = String.valueOf(latitudeValue);
-            longitudeStr = String.valueOf(longitudeValue);
+            locationFromGetLocation = gma.chosenAddress;
+            latitudeFromGetLocation = gma.latitudeValue;
+            longitudeFromGetLocation = gma.longitudeValue;
+            latitudeFinal = String.valueOf(latitudeFromGetLocation);
+            longitudeFinal = String.valueOf(longitudeFromGetLocation);
             isGetLocationClicked = false;
-            task_location.setText(locationFinal);
+            isResetLocationClicked = false;
+            task_location.setText(locationFromGetLocation);
         }
 
         /* Checking */
         if (nameFinal.trim().length() < 1) {
             errorStep++;
-            task_name.setError("Provide a task name.");
+            task_name.setError("Provide a task name");
         } else {
             task_name.setError(null);
         }
@@ -213,13 +249,28 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
         if (errorStep == 0) {
             if (isUpdate) {
-                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeStr, longitudeStr);
+                // if chosen location was proper:
+                if(!locationFromGetLocation.equals("") && !locationFromGetLocation.equals("Location is not set")) {
+                    locationFinal = locationFromGetLocation;
+                    latitudeFinal = String.valueOf(latitudeFromGetLocation);
+                    longitudeFinal = String.valueOf(longitudeFromGetLocation);
+                }
+                // else if location wasn't searched/found(keep the real one):
+                else if(locationFromGetLocation.equals("Location is not set")) {
+                    Cursor cursor = mydb.getDataSpecific(id);
+                    if(cursor.moveToFirst()) {
+                        //cursor.moveToFirst();
+                        String originalLocation = cursor.getString(5);
+                        locationFinal = originalLocation;
+                        latitudeFinal = String.valueOf(latitudeFromGetLocation);
+                        longitudeFinal = String.valueOf(longitudeFromGetLocation);
+                    }
+                }
+                mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated", Toast.LENGTH_SHORT).show();
-                locationFinal = "Location is not set";
             } else {
-                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeStr, longitudeStr);
+                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFromGetLocation, latitudeFinal, longitudeFinal);
                 Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_SHORT).show();
-                locationFinal = "Location is not set";
             }
 
             finish();

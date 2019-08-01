@@ -55,7 +55,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     TaskDBHelper mydb;
     Activity activity;
 
-    static String chosenAddress = "Location is not set"; // this will be saved for each task:
+    static String chosenAddress = "Location is not set"; // this will be saved for each task
     static double latitudeValue, longitudeValue;
     boolean isChosen = false;
 
@@ -111,7 +111,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                     }
                 }
                 else{
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
                 }
                 return;
         }
@@ -213,13 +213,13 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                                     Toast.makeText(this, "Location was saved", Toast.LENGTH_LONG).show();
                                 }
                             } else {
-                                Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Location not found", Toast.LENGTH_LONG).show();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        Toast.makeText(this, "Please write any location name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Please write any location name", Toast.LENGTH_LONG).show();
                     }
                     break;
             }
