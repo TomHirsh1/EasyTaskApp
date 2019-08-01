@@ -51,6 +51,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     double latitudeFromGetLocation, longitudeFromGetLocation;
     String latitudeFinal = "0", longitudeFinal = "0";
     boolean isGetLocationClicked = false, isResetLocationClicked = false;
+    boolean attemptToChangeLocation = false; // this will help to handle empty DoneAddTask bugs
 
     Intent intent;
     Boolean isUpdate;
@@ -81,6 +82,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         location_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 isGetLocationClicked = true;
+                attemptToChangeLocation = true;
                 openMapActivity();
                 /*
                 GoogleMapsActivity gma = new GoogleMapsActivity();
@@ -128,6 +130,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
                 isResetLocationClicked = true;
+                attemptToChangeLocation = true;
                 locationFinal = "Location is not set";
                 latitudeFromGetLocation = 0;
                 longitudeFromGetLocation = 0;
@@ -249,21 +252,33 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
 
         if (errorStep == 0) {
             if (isUpdate) {
-                // if chosen location was proper:
-                if(!locationFromGetLocation.equals("") && !locationFromGetLocation.equals("Location is not set")) {
-                    locationFinal = locationFromGetLocation;
-                    latitudeFinal = String.valueOf(latitudeFromGetLocation);
-                    longitudeFinal = String.valueOf(longitudeFromGetLocation);
-                }
-                // else if location wasn't searched/found(keep the real one):
-                else if(locationFromGetLocation.equals("Location is not set")) {
-                    Cursor cursor = mydb.getDataSpecific(id);
-                    if(cursor.moveToFirst()) {
-                        //cursor.moveToFirst();
-                        String originalLocation = cursor.getString(5);
+                // location didn't changed at all:
+                if(!attemptToChangeLocation) {
+                    Cursor task = mydb.getDataSpecific(id);
+                    if (task.moveToFirst()) {
+                        //task.moveToFirst();
+                        String originalLocation = task.getString(5);
                         locationFinal = originalLocation;
+                    }
+                }
+                // location has changed:
+                else {
+                    // if chosen location was proper:
+                    if (!locationFromGetLocation.equals("") && !locationFromGetLocation.equals("Location is not set")) {
+                        locationFinal = locationFromGetLocation;
                         latitudeFinal = String.valueOf(latitudeFromGetLocation);
                         longitudeFinal = String.valueOf(longitudeFromGetLocation);
+                    }
+                    // else if location wasn't searched/found(keep the real one):
+                    else if (locationFromGetLocation.equals("Location is not set")) {
+                        Cursor cursor = mydb.getDataSpecific(id);
+                        if (cursor.moveToFirst()) {
+                            //cursor.moveToFirst();
+                            String originalLocation = cursor.getString(5);
+                            locationFinal = originalLocation;
+                            latitudeFinal = String.valueOf(latitudeFromGetLocation);
+                            longitudeFinal = String.valueOf(longitudeFromGetLocation);
+                        }
                     }
                 }
                 mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
