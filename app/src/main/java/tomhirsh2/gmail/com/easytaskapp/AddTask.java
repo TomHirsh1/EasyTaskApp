@@ -258,7 +258,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                     if (task.moveToFirst()) {
                         //task.moveToFirst();
                         String originalLocation = task.getString(5);
+
                         locationFinal = originalLocation;
+                        latitudeFinal = task.getString(6);
+                        longitudeFinal = task.getString(7);
                     }
                 }
                 // location has changed:
