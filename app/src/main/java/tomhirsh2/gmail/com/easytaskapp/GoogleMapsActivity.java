@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -56,8 +57,8 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     Activity activity;
 
     static String chosenAddress = "Location is not set"; // this will be saved for each task
-    static double latitudeValue, longitudeValue;
-    boolean isChosen = false;
+    static double latitudeValue, longitudeValue;        // as well as these values
+    boolean isLocationChosen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +184,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     }
 
     public void onClick(View v){
-        if(!isChosen) {
+        if(!isLocationChosen) {
             switch (v.getId()) {
                 case R.id.search_address:
                     EditText addressField = (EditText) findViewById(R.id.location_search);
@@ -208,7 +209,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                                     mMap.addMarker(userMarkerOptions);
                                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
-                                    isChosen = true;
+                                    isLocationChosen = true;
                                     hideSoftKeyboard();
                                     Toast.makeText(this, "Location was saved", Toast.LENGTH_LONG).show();
                                 }

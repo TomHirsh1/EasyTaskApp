@@ -287,7 +287,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                 mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated", Toast.LENGTH_SHORT).show();
             } else {
-                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFromGetLocation, latitudeFinal, longitudeFinal);
+                mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
                 Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_SHORT).show();
             }
 
