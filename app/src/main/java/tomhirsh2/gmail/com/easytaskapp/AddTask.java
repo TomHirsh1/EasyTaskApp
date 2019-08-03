@@ -223,7 +223,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             longitudeFromGetLocation = gma.longitudeValue;
             latitudeFinal = String.valueOf(latitudeFromGetLocation);
             longitudeFinal = String.valueOf(longitudeFromGetLocation);
-            isGetLocationClicked = false;
+            //isGetLocationClicked = false;
             isResetLocationClicked = false;
             task_location.setText(locationFromGetLocation);
         }
@@ -287,6 +287,10 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                 mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
                 Toast.makeText(getApplicationContext(), "Task Updated", Toast.LENGTH_SHORT).show();
             } else {
+                if(!locationFromGetLocation.equals("Location is not set") && isGetLocationClicked) {
+                    locationFinal = locationFromGetLocation;
+                    isGetLocationClicked = false;
+                }
                 mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
                 Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_SHORT).show();
             }
