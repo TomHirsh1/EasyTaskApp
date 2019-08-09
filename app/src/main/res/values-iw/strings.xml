@@ -62,6 +62,20 @@
     <string name="TryAgain">נסה שוב</string>
     <string name="TaskDeleted">המשימה נמחקה</string>
 
+    <!-- About -->
+    <string name="Version">גרסה 1.0</string>
+    <string name="Description">
+        <br>
+        האפליקציה מבוססת מיקום וזמן.
+        \n</br>
+        המטרה שלנו היא לעזור עם לוח זמנים צפוף על מנת למקסם יעילות.
+        רשימת משימות העושה שימוש באלגוריתם חכם לתעדוף משימות, תעזור
+        לך להיות פרודקטיבי יותר.
+        שים לב כי האפליקציה עדיין בבנייה, גרסאות חדשות ישוחררו
+        כך שנוכל להפוך את חוויית המשתמש לטובה עוד יותר.
+    </string>
+    <string name="ContactUs">צור איתנו קשר</string>
+
     <!-- spinner -->
     <string-array name="priorityValues">
         <item>נמוכה</item>

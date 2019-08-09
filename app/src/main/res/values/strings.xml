@@ -61,6 +61,18 @@
     <string name="TryAgain">Try Again</string>
     <string name="TaskDeleted">Task Deleted</string>
 
+    <!-- About -->
+    <string name="Version">Version 1.0</string>
+    <string name="Description">
+        This application is based on location and time.
+        Our goal is to help with busy schedule in order to maximize efficiency.
+        Todo list using smart algorithm to task prioritization, helps you
+        to be more productive.
+        Note that this app is still under build, new versions will be released
+        so we can make user experience to even better.
+    </string>
+    <string name="ContactUs">CONTACT US</string>
+
     <!-- spinner -->
     <string-array name="priorityValues">
         <item>Low</item>

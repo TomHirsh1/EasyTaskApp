@@ -166,7 +166,9 @@ public class TaskHome extends AppCompatActivity {
                 //Toast.makeText(this, "Language", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.about:
-                Toast.makeText(TaskHome.this, getResources().getString(R.string.About), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, About.class);
+                startActivity(i);
+                //Toast.makeText(TaskHome.this, getResources().getString(R.string.About), Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

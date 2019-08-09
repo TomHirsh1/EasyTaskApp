@@ -16,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeToolBar">
-        <receiver
-            android:name=".services.mLocationService">
-        </receiver>
+        <activity android:name=".About"></activity>
+
+        <receiver android:name=".services.mLocationService"></receiver>
+
         <service
             android:name=".services.LocationService"
             android:enabled="true"
