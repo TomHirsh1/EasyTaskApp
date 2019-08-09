@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyTask</string>
+
+    <!-- google maps xml -->
+    <string name="EnterAddress">הכנס כתובת</string>
+
+    <!-- menu -->
+    <string name="ChooseLanguage">בחר שפה</string>
+    <string name="Settings">הגדרות</string>
+    <string name="Language">שפה</string>
+    <string name="About">אודות</string>
+
+    <!-- task home xml -->
+    <string name="Tasks">משימות</string>
+    <string name="OverDue">עבר זמנן</string>
+    <string name="Today">היום</string>
+    <string name="Tomorrow">מחר</string>
+    <string name="UpcomingNext">משימות עתידיות</string>
+
+    <!-- add task activity -->
+    <string name="Update">עדכון משימה</string>
+    <string name="ProvideATaskName">כתוב תאור למשימה</string>
+    <string name="ProvideASpecificDate">בחר תאריך</string>
+    <string name="ProvideASpecificTime">בחר שעה</string>
+    <string name="DeleteTask">האם למחוק משימה?</string>
+    <string name="Yes">כן</string>
+    <string name="No">לא</string>
+
+    <!-- task list row xml -->
+    <string name="TaskNameHere">שם משימה כאן</string>
+    <string name="TaskDate">תאריך משימה</string>
+    <string name="TaskTime">שעת משימה</string>
+    <string name="TaskPriority">עדיפות משימה</string>
+    <string name="TaskLocation">מיקום משימה</string>
+
+    <!-- task list row xml -->
+    <string name="CreateNewTask">יצירת משימה חדשה</string>
+    <string name="WhatIsToBeDone">מה יש להשלים?</string>
+    <string name="EnterYourTask">הכנס את משימתך</string>
+    <string name="DueDate">תאריך סיום</string>
+    <string name="EnterDate">בחר תאריך</string>
+    <string name="StartAt">שעת התחלה</string>
+    <string name="EnterTime">בחר שעה</string>
+    <string name="Priority">עדיפות</string>
+    <string name="Location">מיקום:</string>
+    <string name="LocationIsNotSet">מיקום לא הוגדר</string>
+    <string name="GetLocation">בחר מיקום</string>
+    <string name="ResetLocation">אפס מיקום</string>
+
+    <!-- Toasts -->
+    <string name="PermissionDenied">הרשאה נדחתה</string>
+    <string name="LocationWasSaved">המיקום נשמר</string>
+    <string name="LocationNotFound">מיקום לא נמצא</string>
+    <string name="PleaseWriteAnyLocationName">נא הכנס מיקום כלשהו</string>
+
+    <string name="AcceptThisToTrackYourLocation">אפשר כדי לעקוב אחר מיקומך</string>
+
+    <string name="LocationWasReset">המיקום אופס</string>
+    <string name="TaskUpdated">המשימה התעדכנה</string>
+    <string name="TaskAdded">המשימה התווספה</string>
+    <string name="TryAgain">נסה שוב</string>
+    <string name="TaskDeleted">המשימה נמחקה</string>
+
+    <!-- spinner -->
+    <string-array name="priorityValues">
+        <item>נמוכה</item>
+        <item>בינונית</item>
+        <item>גבוהה</item>
+    </string-array>
+</resources>

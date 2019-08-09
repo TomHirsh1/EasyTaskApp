@@ -44,7 +44,7 @@
             android:id="@+id/centerContent"
             android:layout_width="366dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="4"
             android:orientation="vertical"
             android:visibility="visible">
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="10dp"
-                android:text="Task Name here"
+                android:text="@string/TaskNameHere"
                 android:textColor="#8D8D8D"
                 android:textSize="16sp"
                 android:visibility="visible" />
@@ -63,7 +63,7 @@
                 android:id="@+id/task_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task Date"
+                android:text="@string/TaskDate"
                 android:textColor="#676464"
                 android:textSize="14sp"
                 android:typeface="sans" />
@@ -72,7 +72,7 @@
                 android:id="@+id/task_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task Time"
+                android:text="@string/TaskTime"
                 android:textColor="#676464"
                 android:textSize="14sp"
                 android:typeface="sans" />
@@ -81,7 +81,7 @@
                 android:id="@+id/task_priority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task Priority"
+                android:text="@string/TaskPriority"
                 android:textColor="#676464"
                 android:textSize="14sp"
                 android:typeface="sans" />
@@ -90,7 +90,7 @@
                 android:id="@+id/task_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task Location"
+                android:text="@string/TaskLocation"
                 android:textColor="#676464"
                 android:textSize="14sp"
                 android:typeface="sans" />

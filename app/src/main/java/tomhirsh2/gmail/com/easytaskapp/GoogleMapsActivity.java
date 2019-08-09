@@ -112,7 +112,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                     }
                 }
                 else{
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getResources().getString(R.string.PermissionDenied), Toast.LENGTH_LONG).show();
                 }
                 return;
         }
@@ -211,16 +211,16 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
                                     isLocationChosen = true;
                                     hideSoftKeyboard();
-                                    Toast.makeText(this, "Location was saved", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(this, getResources().getString(R.string.LocationWasSaved), Toast.LENGTH_LONG).show();
                                 }
                             } else {
-                                Toast.makeText(this, "Location not found", Toast.LENGTH_LONG).show();
+                                Toast.makeText(this, getResources().getString(R.string.LocationNotFound), Toast.LENGTH_LONG).show();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        Toast.makeText(this, "Please write any location name", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getResources().getString(R.string.PleaseWriteAnyLocationName), Toast.LENGTH_LONG).show();
                     }
                     break;
             }

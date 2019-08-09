@@ -1,6 +1,67 @@
 <resources>
     <string name="app_name">EasyTask</string>
 
+    <!-- google maps xml -->
+    <string name="EnterAddress">Enter Address</string>
+
+    <!-- menu -->
+    <string name="ChooseLanguage">Choose Language</string>
+    <string name="Settings">Settings</string>
+    <string name="Language">Language</string>
+    <string name="About">About</string>
+
+    <!-- task home xml -->
+    <string name="Tasks">Tasks</string>
+    <string name="OverDue">OverDue</string>
+    <string name="Today">Today</string>
+    <string name="Tomorrow">Tomorrow</string>
+    <string name="UpcomingNext">Upcoming Next</string>
+
+    <!-- add task activity -->
+    <string name="Update">Update</string>
+    <string name="ProvideATaskName">Provide a task name</string>
+    <string name="ProvideASpecificDate">Provide a specific date</string>
+    <string name="ProvideASpecificTime">Provide a specific time</string>
+    <string name="DeleteTask">Delete task?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+
+    <!-- task list row xml -->
+    <string name="TaskNameHere">Task Name Here</string>
+    <string name="TaskDate">Task Date</string>
+    <string name="TaskTime">Task Time</string>
+    <string name="TaskPriority">Task Priority</string>
+    <string name="TaskLocation">Task Location</string>
+
+    <!-- task list row xml -->
+    <string name="CreateNewTask">Create New Task</string>
+    <string name="WhatIsToBeDone">What is to be done?</string>
+    <string name="EnterYourTask">Enter Your Task</string>
+    <string name="DueDate">Due Date</string>
+    <string name="EnterDate">Enter Date</string>
+    <string name="StartAt">Start At</string>
+    <string name="EnterTime">Enter Time</string>
+    <string name="Priority">Priority</string>
+    <string name="Location">Location:</string>
+    <string name="LocationIsNotSet">Location is not set</string>
+    <string name="GetLocation">Get Location</string>
+    <string name="ResetLocation">Reset Location</string>
+
+    <!-- Toasts -->
+    <string name="PermissionDenied">Permission Denied</string>
+    <string name="LocationWasSaved">Location was saved</string>
+    <string name="LocationNotFound">Location not found</string>
+    <string name="PleaseWriteAnyLocationName">Please write any location name</string>
+
+    <string name="AcceptThisToTrackYourLocation">Accept this to track your location</string>
+
+    <string name="LocationWasReset">Location was reset</string>
+    <string name="TaskUpdated">Task Updated</string>
+    <string name="TaskAdded">Task Added</string>
+    <string name="TryAgain">Try Again</string>
+    <string name="TaskDeleted">Task Deleted</string>
+
+    <!-- spinner -->
     <string-array name="priorityValues">
         <item>Low</item>
         <item>Moderate</item>

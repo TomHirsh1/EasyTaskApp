@@ -1,23 +1,35 @@
 package tomhirsh2.gmail.com.easytaskapp;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.drm.DrmStore;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -37,6 +49,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import tomhirsh2.gmail.com.easytaskapp.services.LocationJobService;
 
@@ -76,6 +89,7 @@ public class TaskHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.task_home);
 
         instance = this;
@@ -90,7 +104,7 @@ public class TaskHome extends AppCompatActivity {
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(TaskHome.this, "Accept this to track your location", Toast.LENGTH_LONG).show();
+                        Toast.makeText(TaskHome.this, getResources().getString(R.string.AcceptThisToTrackYourLocation), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -126,11 +140,83 @@ public class TaskHome extends AppCompatActivity {
                     } else {
                         text.setPaintFlags(text.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     }
-
                 }
             }
         });
         */
+        Toolbar toolbar = findViewById (R.id.toolbar_task);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Toast.makeText(TaskHome.this, getResources().getString(R.string.Settings), Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.language:
+                showChangeLanguageDialog();
+                //Toast.makeText(this, "Language", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.about:
+                Toast.makeText(TaskHome.this, getResources().getString(R.string.About), Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showChangeLanguageDialog() {
+        final String[] listLanguages = {"English", "עברית"};
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TaskHome.this);
+        mBuilder.setTitle(getResources().getString(R.string.ChooseLanguage));
+        mBuilder.setSingleChoiceItems(listLanguages, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0) {
+                    // English
+                    setLocale("en");
+                    recreate();
+                }
+                else if(which == 1) {
+                    // Hebrew
+                    setLocale("iw");
+                    recreate();
+                }
+
+                // dismiss alert dialog when language selected
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+    }
+
+    private void setLocale(String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+        // Save data to shared preferences
+        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        editor.putString("Language", language);
+        editor.apply();
+    }
+
+    //load language saved in shared preferences
+    public void loadLocale() {
+        SharedPreferences preferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String language = preferences.getString("Language", "");
+        setLocale(language);
     }
 
     private void updateLocation() {

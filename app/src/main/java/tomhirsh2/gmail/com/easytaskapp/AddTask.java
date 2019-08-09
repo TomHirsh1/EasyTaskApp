@@ -138,7 +138,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                 longitudeFinal = "0";
                 TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
                 task_location.setText(locationFinal);
-                Toast.makeText(getApplicationContext(), "Location was reset", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.LocationWasReset), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -166,7 +166,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText task_time = (EditText) findViewById(R.id.task_time);
         TextView task_location = (TextView) findViewById(R.id.taskShowAddress);
 
-        toolbar_task_add_title.setText("Update");
+        toolbar_task_add_title.setText(getResources().getString(R.string.Update));
         Cursor task = mydb.getDataSpecific(id);
         if (task != null) {
             task.moveToFirst();
@@ -231,21 +231,21 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         /* Checking */
         if (nameFinal.trim().length() < 1) {
             errorStep++;
-            task_name.setError("Provide a task name");
+            task_name.setError(getResources().getString(R.string.ProvideATaskName));
         } else {
             task_name.setError(null);
         }
 
         if (dateFinal.trim().length() < 4) {
             errorStep++;
-            task_date.setError("Provide a specific date");
+            task_date.setError(getResources().getString(R.string.ProvideASpecificDate));
         } else {
             task_date.setError(null);
         }
 
         if (timeFinal.trim().length() < 4) {
             errorStep++;
-            task_time.setError("Provide a specific time");
+            task_time.setError(getResources().getString(R.string.ProvideASpecificTime));
         } else {
             task_time.setError(null);
         }
@@ -285,35 +285,35 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                     }
                 }
                 mydb.updateContact(id, nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
-                Toast.makeText(getApplicationContext(), "Task Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.TaskUpdated), Toast.LENGTH_SHORT).show();
             } else {
                 if(!locationFromGetLocation.equals("Location is not set") && isGetLocationClicked) {
                     locationFinal = locationFromGetLocation;
                     isGetLocationClicked = false;
                 }
                 mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
-                Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.TaskAdded), Toast.LENGTH_SHORT).show();
             }
 
             finish();
         } else {
-            Toast.makeText(getApplicationContext(), "Try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.TryAgain), Toast.LENGTH_SHORT).show();
         }
     }
 
     public void deleteAddTask(View v) {
         AlertDialog.Builder alertDlg = new AlertDialog.Builder(this);
-        alertDlg.setMessage("Delete task?");
+        alertDlg.setMessage(getResources().getString(R.string.DeleteTask));
         alertDlg.setCancelable(false);
-        alertDlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        alertDlg.setPositiveButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mydb.deleteTask(id);
-                Toast.makeText(getApplicationContext(), "Task Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.TaskDeleted), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
-        alertDlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        alertDlg.setNegativeButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // nothing to do

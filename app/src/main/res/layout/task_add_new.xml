@@ -36,11 +36,11 @@
                 android:layout_weight="1"
                 android:drawablePadding="0dp"
                 android:gravity="center_vertical|start"
-                android:paddingLeft="16dp"
-                android:paddingRight="4dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="4dp"
                 android:textColor="#ffffff"
-                android:text="Create New Task"
-                android:textSize="18dp"
+                android:text="@string/CreateNewTask"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 />
             <ImageView
@@ -71,15 +71,15 @@
         android:background="#1E1D23"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp">
 
         <TextView
             android:id="@+id/taskTextText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="What is to be done?"
+            android:text="@string/WhatIsToBeDone"
             android:textColor="#CCCCCC"
             android:textSize="16sp" />
 
@@ -91,7 +91,7 @@
             android:layout_gravity="center"
             android:background="@android:color/white"
             android:ems="10"
-            android:hint="Enter your task"
+            android:hint="@string/EnterYourTask"
             android:padding="12dp"
             android:singleLine="true"
             android:textColor="#666666"
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Due Date"
+            android:text="@string/DueDate"
             android:textColor="#CCCCCC"
             android:textSize="16sp" />
 
@@ -120,7 +120,7 @@
             android:background="@android:color/white"
             android:ems="10"
             android:focusable="false"
-            android:hint="Enter date"
+            android:hint="@string/EnterDate"
             android:onClick="showStartDatePicker"
             android:padding="12dp"
             android:singleLine="true"
@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Start at"
+            android:text="@string/StartAt"
             android:textColor="#CCCCCC"
             android:textSize="16sp" />
 
@@ -149,7 +149,7 @@
             android:background="@android:color/white"
             android:ems="10"
             android:focusable="false"
-            android:hint="Enter time"
+            android:hint="@string/EnterTime"
             android:onClick="showStartTimePicker"
             android:padding="12dp"
             android:singleLine="true"
@@ -166,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Priority"
+            android:text="@string/Priority"
             android:textColor="#CCCCCC"
             android:textSize="16sp" />
 
@@ -188,7 +188,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Location:"
+            android:text="@string/Location"
             android:textColor="#CCCCCC"
             android:textSize="16sp" />
 
@@ -199,7 +199,7 @@
             android:layout_marginEnd="0dp"
             android:background="@color/mdtp_white"
             android:padding="10dp"
-            android:text="Location is not set"
+            android:text="@string/LocationIsNotSet"
             android:textColor="@color/mdtp_dark_gray"
             android:textSize="16sp" />
 
@@ -213,7 +213,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Get Location" />
+                android:text="@string/GetLocation" />
 
             <Button
                 android:id="@+id/reset_location_button"
