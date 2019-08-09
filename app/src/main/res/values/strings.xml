@@ -79,4 +79,7 @@
         <item>Moderate</item>
         <item>High</item>
     </string-array>
+    <string name="Low">Low</string>
+    <string name="Moderate">Moderate</string>
+    <string name="High">High</string>
 </resources>

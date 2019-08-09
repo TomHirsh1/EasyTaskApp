@@ -46,7 +46,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     ArrayAdapter<String> spinnerAdapter;
     String priorityFinal;
 
-    String locationFinal = getResources().getString(R.string.LocationIsNotSet);
+    String locationFinal = "Location is not set";
     String locationFromGetLocation = "";
     double latitudeFromGetLocation, longitudeFromGetLocation;
     String latitudeFinal = "0", longitudeFinal = "0";
@@ -131,7 +131,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
                 isResetLocationClicked = true;
                 attemptToChangeLocation = true;
-                locationFinal = getResources().getString(R.string.LocationIsNotSet);
+                locationFinal = "Location is not set";
                 latitudeFromGetLocation = 0;
                 longitudeFromGetLocation = 0;
                 latitudeFinal = "0";
@@ -172,9 +172,9 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             task.moveToFirst();
 
             String currentPrioritySpinnerValue = task.getString(4).toString();
-            if(currentPrioritySpinnerValue.equals("Low"))
+            if(currentPrioritySpinnerValue.equals(getResources().getString(R.string.Low)))
                 taskPrioritySpinner.setSelection(0);
-            else if(currentPrioritySpinnerValue.equals("Moderate"))
+            else if(currentPrioritySpinnerValue.equals(getResources().getString(R.string.Moderate)))
                 taskPrioritySpinner.setSelection(1);
             else
                 taskPrioritySpinner.setSelection(2);

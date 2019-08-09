@@ -82,4 +82,7 @@
         <item>בינונית</item>
         <item>גבוהה</item>
     </string-array>
+    <string name="Low">נמוכה</string>
+    <string name="Moderate">בינונית</string>
+    <string name="High">גבוהה</string>
 </resources>
