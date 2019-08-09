@@ -222,7 +222,7 @@
                 android:layout_gravity="end"
                 android:layout_marginStart="40dp"
                 android:layout_toEndOf="@id/location_button"
-                android:text="Reset Location" />
+                android:text="@string/ResetLocation" />
 
         </RelativeLayout>
 

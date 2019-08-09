@@ -46,7 +46,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     ArrayAdapter<String> spinnerAdapter;
     String priorityFinal;
 
-    String locationFinal = "Location is not set";
+    String locationFinal = getResources().getString(R.string.LocationIsNotSet);
     String locationFromGetLocation = "";
     double latitudeFromGetLocation, longitudeFromGetLocation;
     String latitudeFinal = "0", longitudeFinal = "0";
@@ -131,7 +131,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
                 isResetLocationClicked = true;
                 attemptToChangeLocation = true;
-                locationFinal = "Location is not set";
+                locationFinal = getResources().getString(R.string.LocationIsNotSet);
                 latitudeFromGetLocation = 0;
                 longitudeFromGetLocation = 0;
                 latitudeFinal = "0";
