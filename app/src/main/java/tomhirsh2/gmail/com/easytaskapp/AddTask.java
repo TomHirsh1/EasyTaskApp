@@ -171,7 +171,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         if (task != null) {
             task.moveToFirst();
 
-            String currentPrioritySpinnerValue = task.getString(4).toString();
+            String currentPrioritySpinnerValue = task.getString(4);
             if(currentPrioritySpinnerValue.equals(getResources().getString(R.string.Low)))
                 taskPrioritySpinner.setSelection(0);
             else if(currentPrioritySpinnerValue.equals(getResources().getString(R.string.Moderate)))
@@ -179,19 +179,19 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
             else
                 taskPrioritySpinner.setSelection(2);
 
-            task_name.setText(task.getString(1).toString());
-            task_location.setText(task.getString(5).toString());
+            task_name.setText(task.getString(1));
+            task_location.setText(task.getString(5));
 
-            Calendar cal = Function.Epoch2Calender(task.getString(2).toString());
+            Calendar cal = Function.Epoch2Calender(task.getString(2));
             startYear = cal.get(Calendar.YEAR);
             startMonth = cal.get(Calendar.MONTH);
             startDay = cal.get(Calendar.DAY_OF_MONTH);
-            task_date.setText(Function.Epoch2DateString(task.getString(2).toString(), "dd/MM/yyyy"));
+            task_date.setText(Function.Epoch2DateString(task.getString(2), "dd/MM/yyyy"));
 
             startHour = cal.get(Calendar.HOUR_OF_DAY);
             startMinute = cal.get(Calendar.MINUTE);
             startSecond = cal.get(Calendar.SECOND);
-            task_time.setText(Function.Epoch2TimeString(task.getString(3).toString(), "kk:mm"));
+            task_time.setText(Function.Epoch2TimeString(task.getString(3), "kk:mm"));
         }
     }
 

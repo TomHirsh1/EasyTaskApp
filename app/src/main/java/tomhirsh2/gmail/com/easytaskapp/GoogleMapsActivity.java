@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
@@ -54,10 +55,9 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     private static final int Request_User_Location_Code = 99;
 
     TaskDBHelper mydb;
-    Activity activity;
 
     static String chosenAddress = "Location is not set"; // this will be saved for each task
-    static double latitudeValue, longitudeValue;        // as well as these values
+    static double latitudeValue, longitudeValue;                                             // as well as these values
     boolean isLocationChosen = false;
 
     @Override
@@ -75,7 +75,6 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         mydb = new TaskDBHelper(this);
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -84,6 +83,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
             mMap.setMyLocationEnabled(true);
         }
     }
+
     public Boolean checkUserLocationPermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){

@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -75,8 +76,6 @@ public class TaskHome extends AppCompatActivity {
     public static String KEY_LOCATION = "location";
 
     private static final String TAG = "TaskHome";
-    TextView text;
-    CheckBox checkBox;
 
     static TaskHome instance;
     LocationRequest locationRequest;
@@ -128,22 +127,6 @@ public class TaskHome extends AppCompatActivity {
         tomorrowText = (TextView) findViewById(R.id.tomorrowText);
         upcomingText = (TextView) findViewById(R.id.upcomingText);
 
-        /*
-        checkBox = (CheckBox) findViewById(R.id.task_check);
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkBox.isChecked()) {
-                    text = findViewById(R.id.task_name);
-                    if(!text.getPaint().isStrikeThruText()) {
-                        text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    } else {
-                        text.setPaintFlags(text.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                    }
-                }
-            }
-        });
-        */
         Toolbar toolbar = findViewById (R.id.toolbar_task);
         setSupportActionBar(toolbar);
     }
@@ -163,12 +146,10 @@ public class TaskHome extends AppCompatActivity {
                 return true;
             case R.id.language:
                 showChangeLanguageDialog();
-                //Toast.makeText(this, "Language", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.about:
                 Intent i = new Intent(this, About.class);
                 startActivity(i);
-                //Toast.makeText(TaskHome.this, getResources().getString(R.string.About), Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -184,37 +165,38 @@ public class TaskHome extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(which == 0) {
                     // English
+                    changeTaskDetailsToEnglish();
                     setLocale("en");
                     recreate();
                 }
                 else if(which == 1) {
                     // Hebrew
+                    changeTaskDetailsToHebrew();
                     setLocale("iw");
                     recreate();
                 }
-
-                // dismiss alert dialog when language selected
+                // dismiss alert dialog when language selected(or not)
                 dialog.dismiss();
             }
         });
-
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
     }
 
+    // set language to selected one
     private void setLocale(String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
         Configuration configuration = new Configuration();
         configuration.locale = locale;
         getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
-        // Save data to shared preferences
+        // save data to shared preferences
         SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
         editor.putString("Language", language);
         editor.apply();
     }
 
-    //load language saved in shared preferences
+    // load language saved in shared preferences
     public void loadLocale() {
         SharedPreferences preferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
         String language = preferences.getString("Language", "");
@@ -301,23 +283,6 @@ public class TaskHome extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         populateData();
-
-        /*
-        text = findViewById(R.id.task_name);
-        checkBox = findViewById(R.id.task_check);
-
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!text.getPaint().isStrikeThruText()) {
-                    text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                }
-                else {
-                    text.setPaintFlags(text.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                }
-            }
-        });
-        */
     }
 
     class LoadTask extends AsyncTask<String, Void, String> {
@@ -363,25 +328,25 @@ public class TaskHome extends AppCompatActivity {
             loadListView(taskListTomorrow,tomorrowList);
             loadListView(taskListUpcoming,upcomingList);
 
-            if(overDueList.size()>0){
+            if(overDueList.size() > 0){
                 overDueText.setVisibility(View.VISIBLE);
             }else{
                 overDueText.setVisibility(View.GONE);
             }
 
-            if(todayList.size()>0){
+            if(todayList.size() > 0){
                 todayText.setVisibility(View.VISIBLE);
             }else{
                 todayText.setVisibility(View.GONE);
             }
 
-            if(tomorrowList.size()>0){
+            if(tomorrowList.size() > 0){
                 tomorrowText.setVisibility(View.VISIBLE);
             }else{
                 tomorrowText.setVisibility(View.GONE);
             }
 
-            if(upcomingList.size()>0){
+            if(upcomingList.size() > 0){
                 upcomingText.setVisibility(View.VISIBLE);
             }else{
                 upcomingText.setVisibility(View.GONE);
@@ -396,15 +361,14 @@ public class TaskHome extends AppCompatActivity {
     public void loadDataList(Cursor cursor, ArrayList<HashMap<String, String>> dataList) {
         if(cursor != null ) {
             cursor.moveToFirst();
-            while (cursor.isAfterLast() == false) {
-
+            while (!cursor.isAfterLast()) {
                 HashMap<String, String> mapToday = new HashMap<String, String>();
-                mapToday.put(KEY_ID, cursor.getString(0).toString());
-                mapToday.put(KEY_TASK, cursor.getString(1).toString());
-                mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd-MM-yyyy"));
-                mapToday.put(KEY_TIME, Function.Epoch2TimeString(cursor.getString(3).toString(), "kk:mm"));
-                mapToday.put(KEY_PRIORITY, cursor.getString(4).toString());
-                mapToday.put(KEY_LOCATION, cursor.getString(5).toString());
+                mapToday.put(KEY_ID, cursor.getString(0));
+                mapToday.put(KEY_TASK, cursor.getString(1));
+                mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2), "dd-MM-yyyy"));
+                mapToday.put(KEY_TIME, Function.Epoch2TimeString(cursor.getString(3), "kk:mm"));
+                mapToday.put(KEY_PRIORITY, cursor.getString(4));
+                mapToday.put(KEY_LOCATION, cursor.getString(5));
                 dataList.add(mapToday);
                 cursor.moveToNext();
             }
@@ -424,5 +388,64 @@ public class TaskHome extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+
+    // the following functions are utility for changing task details according to selected language:
+    private void changeTaskDetailsToEnglish() {
+        mydb = new TaskDBHelper(getApplicationContext());
+        int dbSize = mydb.getSize();
+        if(dbSize > 0) {
+            String id, priority, location;
+            for(int i = 1; i <= dbSize; i++) {
+                id = Integer.toString(i);
+                Cursor task = mydb.getDataSpecific(id);
+                task.moveToFirst();
+                priority = task.getString(4);
+                location = task.getString(5);
+                task.close();
+
+                if(priority.equals(getResources().getString(R.string.Low))) {
+                    mydb.updatePriority(id, "Low");
+                }
+                if(priority.equals(getResources().getString(R.string.Moderate))) {
+                    mydb.updatePriority(id, "Moderate");
+                }
+                if(priority.equals(getResources().getString(R.string.High))) {
+                    mydb.updatePriority(id, "High");
+                }
+                //if(location.equals(getResources().getString(R.string.LocationIsNotSet))) {
+                //    mydb.updateLocation(id, "Location is not set");
+                //}
+            }
+        }
+    }
+    private void changeTaskDetailsToHebrew() {
+        mydb = new TaskDBHelper(getApplicationContext());
+        int dbSize = mydb.getSize();
+        if(dbSize > 0) {
+            String id, priority, location;
+            for(int i = 1; i <= dbSize; i++) {
+                id = Integer.toString(i);
+                Cursor task = mydb.getDataSpecific(id);
+                task.moveToFirst();
+                priority = task.getString(4);
+                location = task.getString(5);
+                task.close();
+
+                if(priority.equals(getResources().getString(R.string.Low))) {
+                    mydb.updatePriority(id, "נמוכה");
+                }
+                if(priority.equals(getResources().getString(R.string.Moderate))) {
+                    mydb.updatePriority(id, "בינונית");
+                }
+                if(priority.equals(getResources().getString(R.string.High))) {
+                    mydb.updatePriority(id, "גבוהה");
+                }
+                //if(location.equals(getResources().getString(R.string.LocationIsNotSet))) {
+                //    mydb.updateLocation(id, "מיקום לא הוגדר");
+                //}
+            }
+        }
     }
 }

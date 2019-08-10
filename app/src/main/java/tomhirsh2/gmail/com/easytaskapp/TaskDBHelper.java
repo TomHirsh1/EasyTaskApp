@@ -79,6 +79,22 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updatePriority(String id, String priority) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("priority", priority);
+        db.update(CONTACTS_TABLE_NAME, contentValues, "id = ? ", new String[] { id } );
+        return true;
+    }
+
+    public boolean updateLocation(String id, String location) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("location", location);
+        db.update(CONTACTS_TABLE_NAME, contentValues, "id = ? ", new String[] { id } );
+        return true;
+    }
+
     public boolean updateContact(String id, String task, String dateStr, String timeStr, String priority, String location, String latitude, String longitude){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -121,12 +137,12 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         //String sql = "select location from CONTACTS_TABLE_NAME where id='"+id+"';";
         Cursor cursor = db.rawQuery(sql, null);
         //Cursor cursor = getReadableDatabase().rawQuery(sql, new String[] {id});
-        String str = "fuck you";
+        String str = "try";
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
             //str = cursor.getString(cursor.getColumnIndex("location"));
             str = cursor.getString(0);
-            //str = "nice";
+            //str = "works";
         }
         cursor.close();
         return str;
