@@ -142,14 +142,15 @@ public class TaskHome extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Toast.makeText(TaskHome.this, getResources().getString(R.string.Settings), Toast.LENGTH_SHORT).show();
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
             case R.id.language:
                 showChangeLanguageDialog();
                 return true;
             case R.id.about:
-                Intent i = new Intent(this, About.class);
-                startActivity(i);
+                Intent aboutIntent = new Intent(this, About.class);
+                startActivity(aboutIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

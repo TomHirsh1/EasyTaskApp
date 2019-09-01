@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/GeneralTitle">
+
+        <SwitchPreference
+            android:key="syncSwitch"
+            android:title="@string/SyncTitle"
+            android:summary="@string/SyncSummary"
+            android:defaultValue="true"
+            android:theme="@style/syncSwitch"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/NotificationsTitle">
+
+        <RingtonePreference
+            android:key="key_ringtone"
+            android:title="@string/RingtoneTitle"
+            android:summary="@string/RingtoneSummary" />
+
+        <EditTextPreference
+            android:key="key_distance"
+            android:title="@string/DistanceTitle"
+            android:summary="@string/DistanceSummary"
+            android:digits="0123456789"
+            android:inputType="numberDecimal"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

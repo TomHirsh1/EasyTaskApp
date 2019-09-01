@@ -62,6 +62,21 @@
     <string name="TryAgain">נסה שוב</string>
     <string name="TaskDeleted">המשימה נמחקה</string>
 
+    <!-- Settings -->
+    <string name="GeneralTitle">כללי</string>
+
+    <string name="SyncTitle">סנכרן נתונים</string>
+    <string name="SyncSummary">אפשר לעקוב אחר מיקום המכשיר</string>
+
+    <string name="NotificationsTitle">התרעות</string>
+
+    <string name="RingtoneTitle">רינגטון</string>
+    <string name="RingtoneSummary">ללא</string>
+
+    <string name="DistanceTitle">מרחק</string>
+    <string name="DistanceSummary">המרחק ממשימה עבורו תתקבל התרעה:</string>
+    <string name="DistanceSummaryMeters">מטרים</string>
+
     <!-- About -->
     <string name="Version">גרסה 1.0</string>
     <string name="Description">

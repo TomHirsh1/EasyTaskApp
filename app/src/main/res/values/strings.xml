@@ -61,6 +61,21 @@
     <string name="TryAgain">Try Again</string>
     <string name="TaskDeleted">Task Deleted</string>
 
+    <!-- Settings -->
+    <string name="GeneralTitle">GENERAL</string>
+
+    <string name="SyncTitle">Synchronize Data</string>
+    <string name="SyncSummary">Enable this to track device location</string>
+
+    <string name="NotificationsTitle">NOTIFICATIONS</string>
+
+    <string name="RingtoneTitle">Ringtone</string>
+    <string name="RingtoneSummary">None</string>
+
+    <string name="DistanceTitle">Distance</string>
+    <string name="DistanceSummary">Range from task to be notified:</string>
+    <string name="DistanceSummaryMeters">Meters</string>
+
     <!-- About -->
     <string name="Version">Version 1.0</string>
     <string name="Description">
