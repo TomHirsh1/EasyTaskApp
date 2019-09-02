@@ -56,6 +56,10 @@ public class SettingsFragment extends PreferenceFragment {
             }
 
             else if(preference instanceof EditTextPreference) {
+                if(TextUtils.isEmpty(stringValue)) {
+                    // set default value
+                    stringValue = "0";
+                }
                 preference.setSummary(DISTANCE_SUMMARY + " " + stringValue + " " + DISTANCE_SUMMARY_METERS);
             }
 
