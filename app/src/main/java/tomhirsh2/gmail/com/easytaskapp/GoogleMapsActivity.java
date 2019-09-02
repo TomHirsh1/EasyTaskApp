@@ -154,6 +154,7 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         }
     }
 
+    // display on map all locations from available tasks
     private void displayChosenLocations(int dbSize) {
         String locationString;
         double latitudeVal, longitudeVal;
