@@ -1,14 +1,9 @@
 package tomhirsh2.gmail.com.easytaskapp;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -24,11 +19,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -40,9 +35,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -57,8 +56,11 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     TaskDBHelper mydb;
 
     static String chosenAddress = "Location is not set"; // this will be saved for each task
-    static double latitudeValue, longitudeValue;                                             // as well as these values
+    static double latitudeValue, longitudeValue;        // as well as these values
     boolean isLocationChosen = false;
+
+    //private PlaceAutocompleteFragment placeAutocompleteFragment; // ### GOOGLE AUTOCOMPLETE PLACES ###
+    private static final String TAG = "GoogleMapsActivity"; // ### GOOGLE AUTOCOMPLETE PLACES ###
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,39 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
 
         mydb = new TaskDBHelper(this);
+
+        /* ### GOOGLE PLACES AUTOCOMPLETE START ### -> Need to enable billing account in order to work.
+        // initialize places
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), "Your API key");
+        }
+        // initialize the AutocompleteSupportFragment
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.autocomplete_fragment);
+        // specify the types of place data to return
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+        // set up a PlaceSelectionListener to handle the response
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                final LatLng latLng = place.getLatLng();
+                if(currentUserLocationMarker != null) {
+                    currentUserLocationMarker.remove();
+                }
+                currentUserLocationMarker = mMap.addMarker(new MarkerOptions().position(latLng).title(place.getName().toString()));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 2000, null);
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+        ### GOOGLE PLACES AUTOCOMPLETE END ### */
     }
 
     @Override
