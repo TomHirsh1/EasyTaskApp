@@ -1,2 +1,2 @@
 # EasyTaskApp
-To do list app based on location and time - Final Project.
+To do list app based on location and time.
