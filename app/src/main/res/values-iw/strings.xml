@@ -5,6 +5,23 @@
     <!-- google maps xml -->
     <string name="EnterAddress">הכנס כתובת</string>
 
+    <!-- login & register-->
+    <string name="PromptEmail">אימייל</string>
+    <string name="Password">סיסמה</string>
+    <string name="SignIn">התחבר</string>
+    <string name="Register">הרשם</string>
+    <string name="EmailRegistration">אימייל להרשמה</string>
+    <string name="ConfirmPassword">אימות סיסמה</string>
+    <string name="Welcome">ברוך הבא</string>
+    <string name="SeeYou">להתראות</string>
+    <string name="AuthenticationFailed">אימות נכשל</string>
+    <string name="NotAllFilled">לא כל השדות מלאים</string>
+    <string name="ErrorSignIn">התרחשה שגיאה</string>
+    <string name="PasswordsDoNotMatch">הסיסמאות לא זהות</string>
+    <string name="UserCreated">המשתמש נוצר</string>
+    <string name="FirstAccount">אין לך משתמש עדיין? הרשם כאן</string>
+    <string name="AlreadyHaveAnAccount">כבר יש לך משתמש? התחבר כאן</string>
+
     <!-- menu -->
     <string name="ChooseLanguage">בחר שפה</string>
     <string name="Settings">הגדרות</string>

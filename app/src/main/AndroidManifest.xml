@@ -16,9 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeToolBar">
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".About" />
-
         <receiver android:name=".services.mLocationService" />
 
         <service
@@ -42,8 +42,9 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".AddTask" />
+        <activity android:name=".TaskHome" />
         <activity android:name=".GoogleMapsActivity" />
-        <activity android:name=".TaskHome">
+        <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

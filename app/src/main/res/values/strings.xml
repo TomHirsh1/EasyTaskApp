@@ -4,6 +4,23 @@
     <!-- google maps xml -->
     <string name="EnterAddress">Enter Address</string>
 
+    <!-- login & register -->
+    <string name="PromptEmail">Email</string>
+    <string name="Password">Password</string>
+    <string name="SignIn">Sign In</string>
+    <string name="Register">Register</string>
+    <string name="EmailRegistration">Email Registration</string>
+    <string name="ConfirmPassword">Confirm Password</string>
+    <string name="Welcome">Welcome</string>
+    <string name="SeeYou">See You</string>
+    <string name="AuthenticationFailed">Authentication Failed</string>
+    <string name="NotAllFilled">Some Fields Are Empty</string>
+    <string name="ErrorSignIn">Error Occurred</string>
+    <string name="PasswordsDoNotMatch">Passwords Do Not Match</string>
+    <string name="UserCreated">User Created</string>
+    <string name="FirstAccount">First account? Sign up</string>
+    <string name="AlreadyHaveAnAccount">Already have an account? Sign in</string>
+
     <!-- menu -->
     <string name="ChooseLanguage">Choose Language</string>
     <string name="Settings">Settings</string>

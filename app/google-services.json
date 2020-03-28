@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "798219179324",
+    "firebase_url": "https://easytaskwithusers.firebaseio.com",
+    "project_id": "easytaskwithusers",
+    "storage_bucket": "easytaskwithusers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798219179324:android:d2c242729613fd7cf5ba39",
+        "android_client_info": {
+          "package_name": "tomhirsh2.gmail.com.easytaskapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798219179324-3mthvga7cghblrht42ihssuikh99b006.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tomhirsh2.gmail.com.easytaskapp",
+            "certificate_hash": "5ceb6f73200a89b79e36486829b209ede077f224"
+          }
+        },
+        {
+          "client_id": "798219179324-jt7d3oek6sarqqp90pdm9bs9asjrrr05.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrlA0MypZoYvSDwAlTimNuSJfBi_5zgeI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798219179324-jt7d3oek6sarqqp90pdm9bs9asjrrr05.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
