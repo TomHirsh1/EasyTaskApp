@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/bg_location"
+        android:src="@drawable/main_bg"
         android:scaleType="centerCrop"
         android:alpha="0.8888888" />
 
@@ -31,6 +31,8 @@
                     android:layout_marginTop="30dp"
                     android:inputType="textEmailAddress"
                     android:textAlignment="viewStart"
+                    android:textColor="#ffffff"
+                    android:textColorHint="@color/White"
                     android:hint="@string/PromptEmail" />
 
 
@@ -42,6 +44,8 @@
                     android:inputType="textPassword"
                     android:textAlignment="viewStart"
                     android:hint="@string/Password"
+                    android:textColor="#ffffff"
+                    android:textColorHint="@color/White"
                     android:layout_below="@+id/input_email"/>
 
                 <EditText
@@ -52,6 +56,8 @@
                     android:inputType="textPassword"
                     android:textAlignment="viewStart"
                     android:hint="@string/ConfirmPassword"
+                    android:textColor="#ffffff"
+                    android:textColorHint="@color/White"
                     android:layout_below="@+id/input_password"/>
 
 
@@ -62,6 +68,7 @@
                     android:layout_marginTop="35dp"
                     android:layout_below="@+id/input_confirm_password"
                     android:text="@string/Register"
+                    android:textColor="#ffffff"
                     android:background="@drawable/theme_button"/>
 
                 <TextView
@@ -71,6 +78,7 @@
                     android:text="@string/AlreadyHaveAnAccount"
                     android:layout_marginTop="20dp"
                     android:layout_below="@+id/btn_register"
+                    android:textColor="#ffffff"
                     android:gravity="center" />
 
                 <Button

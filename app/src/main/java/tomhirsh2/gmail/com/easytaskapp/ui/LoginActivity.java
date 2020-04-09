@@ -90,6 +90,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // Disables back button
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.DisableBackButton), Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -99,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         //updateUI(currentUser);
     }
 
+    /*
     @Override
     public void onStop() {
         super.onStop();
@@ -106,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.addAuthStateListener(mAuthListener);
         }
     }
+     */
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {

@@ -21,8 +21,12 @@
     <string name="UserCreated">המשתמש נוצר</string>
     <string name="FirstAccount">אין לך משתמש עדיין? הרשם כאן</string>
     <string name="AlreadyHaveAnAccount">כבר יש לך משתמש? התחבר כאן</string>
+    <string name="DisableBackButton">הפעולה לא מתאפשרת כאן</string>
+    <string name="ExitBackButton">לחץ שוב ליציאה</string>
 
     <!-- menu -->
+    <string name="Profile">פרופיל</string>
+    <string name="Preferences">העדפות</string>
     <string name="ChooseLanguage">בחר שפה</string>
     <string name="Settings">הגדרות</string>
     <string name="Language">שפה</string>

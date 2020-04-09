@@ -20,8 +20,12 @@
     <string name="UserCreated">User Created</string>
     <string name="FirstAccount">First account? Sign up</string>
     <string name="AlreadyHaveAnAccount">Already have an account? Sign in</string>
+    <string name="DisableBackButton">Action not allowed here</string>
+    <string name="ExitBackButton">Click again to exit</string>
 
     <!-- menu -->
+    <string name="Profile">Profile</string>
+    <string name="Preferences">Preferences</string>
     <string name="ChooseLanguage">Choose Language</string>
     <string name="Settings">Settings</string>
     <string name="Language">Language</string>
@@ -106,12 +110,15 @@
     <string name="ContactUs">CONTACT US</string>
 
     <!-- spinner -->
+    <string name="Low">Low</string>
+    <string name="Moderate">Moderate</string>
+    <string name="High">High</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="priorityValues">
         <item>Low</item>
         <item>Moderate</item>
         <item>High</item>
     </string-array>
-    <string name="Low">Low</string>
-    <string name="Moderate">Moderate</string>
-    <string name="High">High</string>
 </resources>

@@ -61,6 +61,9 @@ public class TaskHome extends AppCompatActivity {
     ArrayList<HashMap<String, String>> tomorrowList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> upcomingList = new ArrayList<HashMap<String, String>>();
 
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+
     public static String KEY_ID = "id";
     public static String KEY_TASK = "task";
     public static String KEY_DATE = "date";
@@ -123,6 +126,25 @@ public class TaskHome extends AppCompatActivity {
         Toolbar toolbar = findViewById (R.id.toolbar_task);
         setSupportActionBar(toolbar);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            super.onBackPressed();
+            return;
+        } else {
+            Toast.makeText(getBaseContext(), "Click again to exit", Toast.LENGTH_SHORT).show();
+        }
+        mBackPressed = System.currentTimeMillis();
+    }
+
+    /*
+    // Disables back button
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.DisableBackButton), Toast.LENGTH_SHORT).show();
+    }
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
