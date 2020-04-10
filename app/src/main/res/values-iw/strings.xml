@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EasyTask</string>
+    <string name="app_slogan">אפליקציית משימות מבוססת מיקום וזמן</string>
+    <string name="under_construction">דף זה נמצא בבנייה</string>
 
     <!-- google maps xml -->
     <string name="EnterAddress">הכנס כתובת</string>
@@ -26,11 +28,15 @@
 
     <!-- menu -->
     <string name="Profile">פרופיל</string>
+    <string name="Friends">חברים</string>
     <string name="Preferences">העדפות</string>
     <string name="ChooseLanguage">בחר שפה</string>
     <string name="Settings">הגדרות</string>
     <string name="Language">שפה</string>
+    <string name="Other">אחר</string>
     <string name="About">אודות</string>
+    <string name="Logout">התנתק</string>
+    <string name="LogoutConfirm">האם אתה בטוח שברצונך להתנתק?</string>
 
     <!-- task home xml -->
     <string name="Tasks">משימות</string>

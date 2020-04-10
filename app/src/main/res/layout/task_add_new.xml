@@ -27,7 +27,7 @@
                 android:padding="5dp"
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_action_close"
+                android:src="@drawable/ic_cancel"
                 android:onClick="closeAddTask"/>
             <TextView
                 android:id="@+id/toolbar_task_add_title"
@@ -49,8 +49,7 @@
                 android:padding="5dp"
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
-                android:tint="@color/mdtp_white"
-                android:src="@drawable/ic_delete_black_24dp"
+                android:src="@drawable/ic_delete"
                 android:onClick="deleteAddTask"/>
             <ImageView
                 android:layout_width="35dp"
@@ -58,7 +57,7 @@
                 android:padding="5dp"
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_action_done"
+                android:src="@drawable/ic_done"
                 android:onClick="doneAddTask"/>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>

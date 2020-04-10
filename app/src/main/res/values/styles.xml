@@ -36,5 +36,15 @@
         <item name="android:colorForeground">#f1f1f1
         </item>
     </style>
+    <style name="AppThemeToolBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppThemeToolBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppThemeToolBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="NavigationView">
+        <item name="android:textColorSecondary">@color/colorAccent</item>
+    </style>
 
 </resources>

@@ -3,31 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_person"
-            android:title="@string/Profile"
-            android:tint="@color/White"/>
-    </group>
+    <item
+        android:id="@+id/drawerPerson"
+        android:icon="@drawable/ic_user"
+        android:title="@string/Profile" />
+    <item
+        android:id="@+id/drawerFriends"
+        android:icon="@drawable/ic_friends"
+        android:title="@string/Friends" />
 
     <item android:title="@string/Preferences">
         <menu>
             <item
-                android:id="@+id/nav_settings"
+                android:id="@+id/drawerSetting"
                 android:icon="@drawable/ic_settings"
-                android:title="@string/Settings"
-                android:tint="@color/White"/>
+                android:title="@string/Settings" />
             <item
-                android:id="@+id/nav_language"
+                android:id="@+id/drawerLanguage"
                 android:icon="@drawable/ic_language"
-                android:title="@string/Language"
-                android:tint="@color/White"/>
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_info"
-                android:title="@string/About"
-                android:tint="@color/White"/>
+                android:title="@string/Language" />
         </menu>
     </item>
+
+    <item android:title="@string/Other">
+        <menu>
+            <item
+                android:id="@+id/drawerAbout"
+                android:icon="@drawable/ic_info"
+                android:title="@string/About" />
+            <item
+                android:id="@+id/drawerLogout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/Logout" />
+        </menu>
+    </item>
+
 </menu>

@@ -16,16 +16,22 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,6 +40,7 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.navigation.NavigationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -45,10 +52,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import tomhirsh2.gmail.com.easytaskapp.models.Friends;
+import tomhirsh2.gmail.com.easytaskapp.models.Profile;
 import tomhirsh2.gmail.com.easytaskapp.services.LocationJobService;
+import tomhirsh2.gmail.com.easytaskapp.ui.LoginActivity;
 
 
-public class TaskHome extends AppCompatActivity {
+public class TaskHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Activity activity;
     TaskDBHelper mydb;
@@ -85,7 +95,18 @@ public class TaskHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
-        setContentView(R.layout.task_home);
+        setContentView(R.layout.activity_main);
+
+        setupNavDrawer();
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+        //setContentView(R.layout.task_home);
 
         instance = this;
 
@@ -108,7 +129,6 @@ public class TaskHome extends AppCompatActivity {
                     }
                 }).check();
 
-
         activity = TaskHome.this;
         mydb = new TaskDBHelper(activity);
         scrollView = (NestedScrollView) findViewById(R.id.scrollView);
@@ -129,7 +149,11 @@ public class TaskHome extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        } else if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();
             return;
         } else {
@@ -139,20 +163,72 @@ public class TaskHome extends AppCompatActivity {
     }
 
     /*
-    // Disables back button
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), getResources().getString(R.string.DisableBackButton), Toast.LENGTH_SHORT).show();
-    }
-     */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+     */
 
+    private void setupNavDrawer() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.drawerPerson:
+                startActivity(new Intent(this, Profile.class));
+                return true;
+            case R.id.drawerFriends:
+                startActivity(new Intent(this, Friends.class));
+                return true;
+            case R.id.drawerSetting:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.drawerLanguage:
+                showChangeLanguageDialog();
+                return true;
+            case R.id.drawerAbout:
+                startActivity(new Intent(this, About.class));
+                return true;
+            case R.id.drawerLogout:
+                logOutAlertMessage();
+        }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void logOutAlertMessage() {
+        androidx.appcompat.app.AlertDialog.Builder alertDlg = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDlg.setMessage(getResources().getString(R.string.LogoutConfirm));
+        alertDlg.setCancelable(false);
+        alertDlg.setPositiveButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.SeeYou), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        alertDlg.setNegativeButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // nothing to do
+            }
+        });
+        alertDlg.create().show();
+    }
+
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -171,6 +247,7 @@ public class TaskHome extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+     */
 
     private void showChangeLanguageDialog() {
         final String[] listLanguages = {"English", "עברית"};

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">EasyTask</string>
+    <string name="app_slogan">To do app based on location and time</string>
+    <string name="under_construction">This page is under construction</string>
 
     <!-- google maps xml -->
     <string name="EnterAddress">Enter Address</string>
@@ -24,12 +26,18 @@
     <string name="ExitBackButton">Click again to exit</string>
 
     <!-- menu -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="Profile">Profile</string>
+    <string name="Friends">Friends</string>
     <string name="Preferences">Preferences</string>
     <string name="ChooseLanguage">Choose Language</string>
     <string name="Settings">Settings</string>
     <string name="Language">Language</string>
+    <string name="Other">Other</string>
     <string name="About">About</string>
+    <string name="Logout">Logout</string>
+    <string name="LogoutConfirm">Are you sure you want to log out?</string>
 
     <!-- task home xml -->
     <string name="Tasks">Tasks</string>
@@ -113,9 +121,7 @@
     <string name="Low">Low</string>
     <string name="Moderate">Moderate</string>
     <string name="High">High</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="priorityValues">
         <item>Low</item>
         <item>Moderate</item>
