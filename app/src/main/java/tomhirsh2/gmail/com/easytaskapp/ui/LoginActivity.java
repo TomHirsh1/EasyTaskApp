@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmail, mPassword;
     private Button btnSignIn, btnRegister;
     private ProgressBar mProgressBar;
+    //private ImageView imageLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn = findViewById(R.id.email_sign_in_button);
         btnRegister = findViewById(R.id.link_register);
         mProgressBar = findViewById(R.id.progressBar);
+        //imageLanguage = findViewById(R.id.login_language);
 
         mAuth = FirebaseAuth.getInstance();
 

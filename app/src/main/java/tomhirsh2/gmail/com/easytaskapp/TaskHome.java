@@ -26,12 +26,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,7 +52,6 @@ import java.util.Locale;
 import tomhirsh2.gmail.com.easytaskapp.models.Friends;
 import tomhirsh2.gmail.com.easytaskapp.models.Profile;
 import tomhirsh2.gmail.com.easytaskapp.services.LocationJobService;
-import tomhirsh2.gmail.com.easytaskapp.ui.LoginActivity;
 
 
 public class TaskHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -145,6 +141,9 @@ public class TaskHome extends AppCompatActivity implements NavigationView.OnNavi
 
         Toolbar toolbar = findViewById (R.id.toolbar_task);
         setSupportActionBar(toolbar);
+
+        // Welcome message right after everything is load up
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.Welcome), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -157,7 +156,7 @@ public class TaskHome extends AppCompatActivity implements NavigationView.OnNavi
             super.onBackPressed();
             return;
         } else {
-            Toast.makeText(getBaseContext(), "Click again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getResources().getString(R.string.ExitBackButton), Toast.LENGTH_SHORT).show();
         }
         mBackPressed = System.currentTimeMillis();
     }
@@ -253,7 +252,15 @@ public class TaskHome extends AppCompatActivity implements NavigationView.OnNavi
         final String[] listLanguages = {"English", "עברית"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TaskHome.this);
         mBuilder.setTitle(getResources().getString(R.string.ChooseLanguage));
-        mBuilder.setSingleChoiceItems(listLanguages, -1, new DialogInterface.OnClickListener() {
+        String currentLanguage = Locale.getDefault().getDisplayLanguage();
+        int languageVal = -1;
+        if(currentLanguage.equals("English")) {
+            languageVal = 0;
+        }
+        if(currentLanguage.equals("עברית")) {
+            languageVal = 1;
+        }
+        mBuilder.setSingleChoiceItems(listLanguages, languageVal, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(which == 0) {
