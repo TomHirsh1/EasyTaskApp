@@ -17,8 +17,8 @@
     <string name="SeeYou">See You</string>
     <string name="AuthenticationFailed">Authentication Failed</string>
     <string name="NotAllFilled">Some Fields Are Empty</string>
-    <string name="ErrorSignIn">Error Occurred</string>
-    <string name="PasswordsDoNotMatch">Passwords Do Not Match</string>
+    <string name="ErrorSignIn">Incorrect email and/or password</string>
+    <string name="PasswordsDoNotMatch">Passwords do not match</string>
     <string name="UserCreated">User Created</string>
     <string name="FirstAccount">First account? Sign up</string>
     <string name="AlreadyHaveAnAccount">Already have an account? Sign in</string>

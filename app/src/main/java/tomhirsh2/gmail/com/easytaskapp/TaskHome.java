@@ -38,6 +38,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -153,22 +154,16 @@ public class TaskHome extends AppCompatActivity implements NavigationView.OnNavi
             drawer.closeDrawer(GravityCompat.START);
             return;
         } else if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-            super.onBackPressed();
-            return;
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+            //logOutAlertMessage();
         } else {
             Toast.makeText(getBaseContext(), getResources().getString(R.string.ExitBackButton), Toast.LENGTH_SHORT).show();
         }
         mBackPressed = System.currentTimeMillis();
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-     */
 
     private void setupNavDrawer() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -215,6 +210,7 @@ public class TaskHome extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.SeeYou), Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
                 finish();
             }
         });
@@ -226,27 +222,6 @@ public class TaskHome extends AppCompatActivity implements NavigationView.OnNavi
         });
         alertDlg.create().show();
     }
-
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent);
-                return true;
-            case R.id.language:
-                showChangeLanguageDialog();
-                return true;
-            case R.id.about:
-                Intent aboutIntent = new Intent(this, About.class);
-                startActivity(aboutIntent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-     */
 
     private void showChangeLanguageDialog() {
         final String[] listLanguages = {"English", "עברית"};

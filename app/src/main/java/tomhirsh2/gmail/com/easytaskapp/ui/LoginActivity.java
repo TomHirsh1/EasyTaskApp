@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Locale;
 
 import tomhirsh2.gmail.com.easytaskapp.R;
 import tomhirsh2.gmail.com.easytaskapp.TaskHome;
@@ -50,22 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         //imageLanguage = findViewById(R.id.login_language);
 
         mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
-                    //Toast.makeText(getApplicationContext(), getResources().getString(R.string.Welcome), Toast.LENGTH_SHORT).show();
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.SeeYou), Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,10 +92,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        //mAuth.addAuthStateListener(mAuthListener);
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     /*
@@ -120,9 +109,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-
-        } else {
-
+            Intent taskHome = new Intent(LoginActivity.this, TaskHome.class);
+            startActivity(taskHome);
         }
     }
 
@@ -140,9 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         hideDialog();
-                        Intent taskHome = new Intent(LoginActivity.this, TaskHome.class);
-                        startActivity(taskHome);
-                        //updateUI(user);
+                        updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
