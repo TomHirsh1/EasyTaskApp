@@ -4,9 +4,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,16 +18,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    private static final String TAG = "AddTask";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     TaskDBHelper mydb;
     DatePickerDialog dpd;
     TimePickerDialog tpd;
@@ -285,8 +299,36 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                 }
                 mydb.insertContact(nameFinal, dateFinal, timeFinal, priorityFinal, locationFinal, latitudeFinal, longitudeFinal);
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.TaskAdded), Toast.LENGTH_SHORT).show();
-            }
 
+                // ###### Add to Cloud Firestore ######
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DocumentReference uidRef = db.collection("users").document(uid);
+
+                // Create a new task with all details
+                Map<String, Object> task = new HashMap<>();
+                task.put("info", nameFinal);
+                task.put("date", dateFinal);
+                task.put("time", timeFinal);
+                task.put("priority", priorityFinal);
+                task.put("location", locationFinal);
+                task.put("latitude", latitudeFinal);
+                task.put("longitude", longitudeFinal);
+
+                uidRef.collection("tasks")
+                        .add(task)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+            }
             finish();
         } else {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.TryAgain), Toast.LENGTH_SHORT).show();

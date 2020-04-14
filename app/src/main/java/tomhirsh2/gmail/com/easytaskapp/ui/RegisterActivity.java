@@ -13,11 +13,18 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import tomhirsh2.gmail.com.easytaskapp.R;
 import tomhirsh2.gmail.com.easytaskapp.models.User;
@@ -27,8 +34,10 @@ import static tomhirsh2.gmail.com.easytaskapp.util.Check.doStringsMatch;
 
 public class RegisterActivity extends AppCompatActivity {
 
+
     private static final String TAG = "RegisterActivity";
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -92,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), getResources().getString(R.string.DisableBackButton), Toast.LENGTH_SHORT).show();
     }
 
+    /*
     @Override
     public void onStart() {
         super.onStart();
@@ -107,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
             mAuth.addAuthStateListener(mAuthListener);
         }
     }
+    */
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
@@ -145,48 +156,20 @@ public class RegisterActivity extends AppCompatActivity {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success");
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.UserCreated), Toast.LENGTH_SHORT).show();
-                    FirebaseUser user = mAuth.getCurrentUser();
+
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    // Create a new user with email and specific user id
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("email", email);
+                    db.collection("users")
+                            .document(uid)
+                            .set(user);
                     redirectLoginScreen();
-                    //updateUI(user);
-
-                    //Log.d(TAG, "onComplete: AuthState: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-                    /*
-                    // Insert some default data
-                    User user = new User();
-                    user.setEmail(email);
-                    user.setUsername(email.substring(0, email.indexOf("@")));
-                    user.setUser_id(FirebaseAuth.getInstance().getUid());
-
-                    FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                            .setTimestampsInSnapshotsEnabled(true)
-                            .build();
-                    mDb.setFirestoreSettings(settings);
-
-                    DocumentReference newUserRef = mDb
-                            .collection(getString(R.string.collection_users))
-                            .document(FirebaseAuth.getInstance().getUid());
-
-                    newUserRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            hideDialog();
-
-                            if (task.isSuccessful()) {
-                                redirectLoginScreen();
-                            } else {
-                                View parentLayout = findViewById(android.R.id.content);
-                                Snackbar.make(parentLayout, "Something went wrong.", Snackbar.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                    */
 
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                     //Toast.makeText(getApplicationContext(), getResources().getString(R.string.AuthenticationFailed), Toast.LENGTH_SHORT).show();
-                    //updateUI(null);
                     View parentLayout = findViewById(android.R.id.content);
                     Snackbar.make(parentLayout, getResources().getString(R.string.AuthenticationFailed), Snackbar.LENGTH_SHORT).show();
                     hideDialog();

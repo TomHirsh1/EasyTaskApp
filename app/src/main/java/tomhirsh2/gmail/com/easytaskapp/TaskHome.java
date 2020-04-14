@@ -39,6 +39,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -57,6 +58,7 @@ import tomhirsh2.gmail.com.easytaskapp.services.LocationJobService;
 
 public class TaskHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     Activity activity;
     TaskDBHelper mydb;
     NoScrollListView taskListOverDue, taskListToday, taskListTomorrow, taskListUpcoming;
